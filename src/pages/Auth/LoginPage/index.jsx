@@ -70,7 +70,7 @@ function LoginPage() {
                 }
               ]}
             >
-              <Input type="password" placeholder="Password" />
+              <Input type="password" placeholder="Mật khẩu" />
             </Form.Item>
             <Form.Item>
               <Form.Item valuePropName="checked" noStyle>
