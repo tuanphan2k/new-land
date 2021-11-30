@@ -1,0 +1,42 @@
+.container-1 {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.container-2 {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.relative {
+  position: relative;
+}
+
+.my-1 {
+  margin: 16px 0;
+}
+
+.mx-2 {
+  margin: 0 16px;
+}
+
+.table-icon {
+  font-size: 2.2rem;
+  cursor: pointer;
+}
+
+.icon-danger {
+  color: $red-color !important;
+}
+
+.icon-primary {
+  color: $blue-color !important;
+}
+
+.d-none {
+  display: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,35 @@
+@import '../../../style/styles.scss';
+
+.login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+
+  &__main {
+    width: 100%;
+  }
+
+  &-form {
+    padding: 40px !important;
+    background-color: $bg-gray;
+
+    &-button {
+      width: 100%;
+    }
+
+    &-forgot {
+      margin-left: 20px;
+      color: $blue-color;
+    }
+
+    &-register {
+      color: $blue-color;
+      cursor: pointer;
+    }
+  }
+
+  &-title {
+    margin-bottom: 16px;
+    font-size: 2rem;
+  }
+}

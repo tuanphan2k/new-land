@@ -1,0 +1,30 @@
+@import '../../../style/styles.scss';
+
+.register {
+  margin-bottom: 34px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+
+  &__main {
+    width: 100%;
+  }
+
+  &-form {
+    padding: 40px !important;
+    background-color: $bg-gray;
+
+    &-button {
+      width: 100%;
+    }
+
+    &-home {
+      color: $blue-color;
+    }
+  }
+
+  &-title {
+    margin-bottom: 16px;
+    font-size: 2rem;
+  }
+}

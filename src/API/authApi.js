@@ -1,9 +1,14 @@
 import axiosClient from './axiosClient'
 
 const authApi = {
-  getTodoList: params => {
-    const url = `/location`
-    return axiosClient.get(url, { params })
+  login: data => {
+    const url = `/auth/login`
+    return axiosClient.post(url, data)
+  },
+
+  register: data => {
+    const url = `/auth/register`
+    return axiosClient.post(url, data)
   }
 }
 

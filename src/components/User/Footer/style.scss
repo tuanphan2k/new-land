@@ -1,41 +1,40 @@
-.footer{
-  background: #14142B ;
+.footer {
+  background: #14142b;
   background-repeat: no-repeat;
   height: 490px;
   display: block;
   top: 0;
 }
-.footer__image{
+.footer__image {
   height: 30px;
 }
 .footer li {
   list-style: none;
 }
-.footer__top{
+.footer__top {
   display: flex;
   justify-content: space-around;
 }
-.footer__center{
+.footer__center {
   display: flex;
   border-top: 1px solid #333333;
   padding: 60px 0 40px;
 }
-.footer__info{
+.footer__info {
   display: flex;
   list-style: none;
-
 }
-h3{
+h3 {
   color: #fff;
   font-size: 16px;
 }
 .footer__center li {
   color: #888888;
   font-size: 14px;
- line-height: 26px;
- font-weight: 400;
+  line-height: 26px;
+  font-weight: 400;
 }
-.footer__center ul{
+.footer__center ul {
   left: 0;
 }
 .footer__contact {
