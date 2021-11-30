@@ -1,41 +1,67 @@
-.header__navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 0;
+@import './src/style/styles.scss';
+
+.header {
   height: 80px;
-  background-color: blue;
-}
-.header__navbar-brand {
-  margin-top: 10px;
-}
-.header__navbar-list {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-}
-.header__navbar-item {
-  font-size: 18px;
-  padding: 15px 10px;
-  font-weight: 600;
-}
-.header__navbar-item:hover a.header__navbar-link {
-  text-decoration: red;
-}
-a.header__navbar-link {
-  color: #fff;
-  text-decoration: none;
-}
-.header__navbar-logo {
-  height: 40px;
-}
-.header__navbar-login {
-  color: #fff;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  font-weight: 600;
-}
-.header__login-item {
-  padding: 15px 10px;
+  font-size: 1.6rem;
+
+  img {
+    cursor: pointer;
+  }
+
+  &__section {
+    height: 100%;
+  }
+
+  &__category {
+    margin: 0;
+    display: flex;
+
+    li {
+      position: relative;
+      margin-right: 12px;
+      color: $text-gray;
+      font-size: 2rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        color: $text-color;
+      }
+
+      &:hover:before {
+        @include position(absolute, null, null, -5px, null);
+        content: '';
+        width: 100%;
+        @include size(100%, 2px);
+        background-color: $text-color;
+      }
+    }
+  }
+
+  &__toolbox {
+    display: flex;
+    margin: 0;
+  }
+
+  .toolbox__item {
+    font-size: 2rem;
+    position: relative;
+    margin-right: 30px;
+    cursor: pointer;
+
+    &--number {
+      @include position(absolute, -8px, -12px, null, null);
+      @include centerBox();
+      @include size(20px);
+      font-size: 1.4rem;
+      color: $white-color;
+      border-radius: 50%;
+      background-color: $red-color;
+    }
+  }
+
+  &__search {
+    max-width: 500px;
+  }
 }

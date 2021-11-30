@@ -1,7 +1,9 @@
-import authReducer from '../pages/Auth/auth.slice'
+import authReducer from './auth.slice'
+import categoryReducer from './category.slice'
 
 const rootReducer = {
-  auth: authReducer
+  auth: authReducer,
+  category: categoryReducer
 }
 
 export default rootReducer

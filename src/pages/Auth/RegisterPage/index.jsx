@@ -2,7 +2,7 @@ import { Form, Input, Button, Row, Col, Select } from 'antd'
 import { Link } from 'react-router-dom'
 import { REGEX } from '../../../constants/validate'
 import { useDispatch } from 'react-redux'
-import { postRegister } from '../auth.slice'
+import { postRegister } from '../../../redux/auth.slice'
 import './style.scss'
 
 function RegisterPage() {
