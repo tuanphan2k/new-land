@@ -1,21 +1,20 @@
 import './style.scss'
-
 function Footer() {
   return (
     <div className="footer">
       <div className="container">
         <div className="footer__top">
-          <a href className="footer__logo">
+          <div className="footer__logo">
             <img src="./images/logo.png" alt="" className="footer__image" />
-          </a>
+          </div>
           <ul className="footer__info">
             <li className="footer__hotline">
               <p>Hotline miễn phí (24/7)</p>
-              <a href>1800 6268</a>
+              <p>1800 6268</p>
             </li>
-            <li footer__cskh>
+            <li className="footer__cskh">
               <p>Chăm sóc khách hàng</p>
-              <a href>hotro@newhome.vn</a>
+              <p>hotro@newhome.vn</p>
             </li>
           </ul>
         </div>
@@ -56,13 +55,6 @@ function Footer() {
               <li>Quy chế hoạt động</li>
               <li>Chính sách bảo mật</li>
               <li>Cơ chế giải quyết tranh chấp</li>
-            </ul>
-          </div>
-          <div className="footer__download">
-            <h3>Tải ứng dụng</h3>
-            <ul>
-              {/* <li><img src="./images/apple.png" alt=""></li>
-                        <li><img src="./images/google.png" alt=""></li> */}
             </ul>
           </div>
         </div>
