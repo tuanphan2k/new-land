@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Row, Input, Menu, Dropdown } from 'antd'
+import { Row, Input, Menu, Dropdown, notification, message } from 'antd'
 import history from '../../../utils/history'
 import {
   SearchOutlined,
@@ -42,6 +42,14 @@ function Header() {
     history.push(`/search?q=${value}`)
   }
 
+  function handleLogout() {
+    localStorage.clear();
+    notification.success({
+      message: 'Đăng xuất thành công'
+    })
+    history.push('/login');
+  }
+
   const menu = (
     <Menu>
       <Menu.Item key="1" onClick={() => history.push('/profile')}>
@@ -54,7 +62,7 @@ function Header() {
       ) : (
         ''
       )}
-      <Menu.Item key="2">Đăng xuất</Menu.Item>
+      <Menu.Item key="2" onClick={() => handleLogout()}>Đăng xuất</Menu.Item>
     </Menu>
   )
 
@@ -88,7 +96,7 @@ function Header() {
               <HeartOutlined />
               <span className="toolbox__item--number">1</span>
             </li>
-            {userInfo.account_type === 3 ? (
+            {userInfo?.account_type === 3 ? (
               <li className="toolbox__item">
                 <BorderOuterOutlined />
               </li>
