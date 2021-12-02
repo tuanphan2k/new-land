@@ -37,6 +37,20 @@
   display: none;
 }
 
+.bg-img {
+  background-image: url('https://storage.googleapis.com/vinhomes-data-01/3_1624089856.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #333;
+}
+
+.ant-form-item-control-input-content {
+  input {
+    font-size: 1.8rem;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }

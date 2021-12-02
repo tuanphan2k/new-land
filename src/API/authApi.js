@@ -7,6 +7,7 @@ const authApi = {
   },
 
   register: data => {
+    console.log(data)
     const url = `/auth/register`
     return axiosClient.post(url, data)
   }

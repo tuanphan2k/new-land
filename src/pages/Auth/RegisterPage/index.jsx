@@ -1,31 +1,53 @@
-import { Form, Input, Button, Row, Col, Select } from 'antd'
+import { useState } from 'react'
+import { Form, Input, Button, Row, Col, Select, notification } from 'antd'
 import { Link } from 'react-router-dom'
 import { REGEX } from '../../../constants/validate'
 import { useDispatch } from 'react-redux'
 import { postRegister } from '../../../redux/auth.slice'
+import { unwrapResult } from '@reduxjs/toolkit'
+import history from '../../../utils/history'
+import ReCAPTCHA from 'react-google-recaptcha'
 import './style.scss'
 
 function RegisterPage() {
   const dispatch = useDispatch()
+  const [isVerified, setIsVerified] = useState(false)
 
-  const onFinish = values => {
+  const onFinish = async values => {
     const { email, firstName, lastName, password, account_type } = values
     let name = firstName + ' ' + lastName
 
-    dispatch(
-      postRegister({
-        email,
-        name,
-        password,
-        password_confirmation: password,
-        account_type
+    if (isVerified) {
+      try {
+        const res = await dispatch(
+          postRegister({
+            email,
+            name,
+            password,
+            password_confirmation: password,
+            account_type
+          })
+        )
+        unwrapResult(res)
+        notification.success({
+          message: 'Đăng ký thành công'
+        })
+        history.push('/login')
+      } catch (err) {
+        notification.warning({
+          message: 'Email đã bị trùng'
+        })
+      }
+    } else {
+      notification.warning({
+        message: 'Bạn phải xác thực!'
       })
-    )
+    }
   }
 
   return (
-    <main className="register container-1">
-      <Row justify="center" className="register__main">
+    <main className="register bg-img">
+      <Row justify="center" className="register__main container-1">
         <Col span={12}>
           <Form
             name="normal_register"
@@ -116,12 +138,26 @@ function RegisterPage() {
             >
               <Input.Password placeholder="Nhập lại mật khẩu" />
             </Form.Item>
-            <Form.Item label="Bạn tạo tài khoản gì" name="account_type">
-              <Select defaultValue={1}>
+            <Form.Item
+              name="account_type"
+              rules={[
+                {
+                  required: true,
+                  message: 'Bạn không được để trống loại tài khoản!'
+                }
+              ]}
+            >
+              <Select placeholder="Bạn tạo tài khoản gì">
                 <Select.Option value={1}>Người mua </Select.Option>
                 <Select.Option value={2}>Người bán</Select.Option>
               </Select>
             </Form.Item>
+            <Row justify="center">
+              <ReCAPTCHA
+                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                onChange={() => setIsVerified(!isVerified)}
+              />
+            </Row>
             <Form.Item>
               <Row>
                 <Button

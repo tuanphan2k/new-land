@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Row, Input, Menu, Dropdown, notification, message } from 'antd'
+import { Row, Input, Menu, Dropdown, notification } from 'antd'
 import history from '../../../utils/history'
 import {
   SearchOutlined,
@@ -43,11 +43,11 @@ function Header() {
   }
 
   function handleLogout() {
-    localStorage.clear();
+    localStorage.clear()
     notification.success({
       message: 'Đăng xuất thành công'
     })
-    history.push('/login');
+    history.push('/login')
   }
 
   const menu = (
@@ -62,14 +62,20 @@ function Header() {
       ) : (
         ''
       )}
-      <Menu.Item key="2" onClick={() => handleLogout()}>Đăng xuất</Menu.Item>
+      <Menu.Item key="2" onClick={() => handleLogout()}>
+        Đăng xuất
+      </Menu.Item>
     </Menu>
   )
 
   return (
     <>
-      <header className="header container-2">
-        <Row className="header__section" justify="space-between" align="middle">
+      <header className="header">
+        <Row
+          className="header__section container-2"
+          justify="space-between"
+          align="middle"
+        >
           <img src={Logo} alt="logo" onClick={() => history.push('/')} />
 
           {isShowInput ? (
