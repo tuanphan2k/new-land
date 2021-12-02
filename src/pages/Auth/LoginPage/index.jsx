@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Form, Input, Button, Checkbox, Row, Col, notification } from 'antd'
 import { Link } from 'react-router-dom'
 import { unwrapResult } from '@reduxjs/toolkit'
@@ -10,25 +11,32 @@ import './style.scss'
 
 function LoginPage() {
   const dispatch = useDispatch()
+  const [isVerified, setIsVerified] = useState(false)
 
   const onFinish = async values => {
-    try {
-      const res = await dispatch(postLogin(values))
-      unwrapResult(res)
-      notification.success({
-        message: 'Đăng nhập thành công'
-      })
-      history.push('/')
-    } catch (err) {
+    if (isVerified) {
+      try {
+        const res = await dispatch(postLogin(values))
+        unwrapResult(res)
+        notification.success({
+          message: 'Đăng nhập thành công'
+        })
+        history.push('/')
+      } catch (err) {
+        notification.warning({
+          message: 'Email hoặc mật khẩu không đúng'
+        })
+      }
+    } else {
       notification.warning({
-        message: 'Email hoặc mật khẩu không đúng'
+        message: 'Bạn phải xác thực!'
       })
     }
   }
 
   return (
-    <main className="login container-1">
-      <Row justify="center" className="login__main">
+    <main className="login bg-img">
+      <Row justify="center" className="login__main container-1">
         <Col span={12}>
           <Form
             name="normal_login"
@@ -82,7 +90,10 @@ function LoginPage() {
               </Link>
             </Form.Item>
             <Row justify="center">
-              <ReCAPTCHA sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" />
+              <ReCAPTCHA
+                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                onChange={() => setIsVerified(!isVerified)}
+              />
             </Row>
             <Form.Item>
               <Row>
