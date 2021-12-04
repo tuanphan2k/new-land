@@ -1,0 +1,30 @@
+@import "./src/style/styles.scss";
+
+.banner-slider {
+  margin: 30px 0;
+
+  &__item {
+    img {
+      margin: 0 auto;
+    }
+  }
+
+  &__content {
+    max-width: 400px;
+    @include position(absolute, 50%, null, null, 400px);
+    transform: translate(-50%, -50%);
+
+    h3 {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $blue-color;
+      letter-spacing: 3px;
+    }
+
+    h2 {
+      font-size: 4rem;
+      font-weight: bold;
+    }
+  }
+}
