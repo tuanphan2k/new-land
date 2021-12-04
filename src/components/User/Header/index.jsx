@@ -74,7 +74,7 @@ function Header() {
     <>
       <header className="header">
         <Row
-          className="header__section container-2"
+          className="header__section container-1"
           justify="space-between"
           align="middle"
         >

@@ -1,0 +1,80 @@
+@import "./src/style/styles.scss";
+
+.product-item {
+  border: 1px solid $bg-gray;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border-radius: 6px;
+
+  &__img {
+    position: relative;
+
+    img {
+      border-radius: 6px 6px 0 0;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &--new {
+      @include position(absolute, 20px, null, null, 15px);
+      @include centerBox();
+      border-radius: 3px;
+      padding: 3px 5px;
+      background-color: $primary-color;
+      color: $white-color;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+    }
+  }
+
+  &__content {
+    padding: 0 20px;
+    background-color: $white-color;
+
+    &--name {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    &--price {
+      margin: 0;
+      padding-bottom: 6px;
+      padding-right: 16px;
+      text-align: end;
+      font-size: 1.6rem;
+      color: $red-color;
+    }
+  }
+
+  &__toolbox {
+    @include position(absolute, 5px, 15px, null, null);
+    opacity: 0;
+    transition: 0.3s;
+
+    li {
+      margin-bottom: 4px;
+      padding: 10px 12px;
+      border: 1px solid $text-gray;
+      background-color: $white-color;
+      border-radius: 4px;
+      transition: 0.3s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $bg-gray;
+      }
+    }
+  }
+
+  &:hover &__toolbox {
+    opacity: 1;
+  }
+
+  &__comment {
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+    color: $text-gray;
+  }
+}

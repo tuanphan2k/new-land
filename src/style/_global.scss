@@ -1,12 +1,12 @@
 .container-1 {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.container-2 {
   max-width: 1400px;
   margin: 0 auto;
 }
+
+// .container-2 {
+//   max-width: 1400px;
+//   margin: 0 auto;
+// }
 
 .relative {
   position: relative;
@@ -42,7 +42,6 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  color: #333;
 }
 
 .ant-form-item-control-input-content {
