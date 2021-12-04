@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Row, Input, Menu, Dropdown, notification } from 'antd'
+import { Row, Input, Menu, Dropdown, notification, Spin } from 'antd'
 import history from '../../../utils/history'
 import {
   SearchOutlined,
@@ -36,6 +36,8 @@ function Header() {
         </li>
       ))
     }
+
+    return <Spin />
   }
 
   function handleSearchProduct(value) {

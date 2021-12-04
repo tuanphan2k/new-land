@@ -1,3 +1,4 @@
+import bankImg from '../../../assets/logos/bank3.png'
 import './style.scss'
 function Footer() {
   return (
@@ -5,7 +6,7 @@ function Footer() {
       <div className="container">
         <div className="footer__top">
           <div className="footer__logo">
-            <img src="./images/logo.png" alt="" className="footer__image" />
+            <img src={bankImg} alt="" className="footer__image" />
           </div>
           <ul className="footer__info">
             <li className="footer__hotline">

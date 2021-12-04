@@ -1,0 +1,11 @@
+@import '../../../style//styles.scss';
+
+.home-page {
+  &__banner {
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
