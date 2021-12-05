@@ -1,23 +1,23 @@
 import { Carousel } from 'antd'
+import bannerImg2 from '../../../assets/images/bannerImg2.jpeg'
+import bannerImg3 from '../../../assets/images/bannerImg3.jpeg'
+import bannerImg4 from '../../../assets/images/bannerImg4.jpeg'
 import './style.scss'
 
 function BannerSilder() {
   const bannerList = [
     {
-      imgUrl:
-        'http://lezada.reactdemo.hasthemes.com/assets/images/hero-slider/hero-slider-one/1.jpg',
+      imgUrl: bannerImg3,
       type: 'Accessories',
       content: 'Bottle Grinder, Small, 2-Piece'
     },
     {
-      imgUrl:
-        'http://lezada.reactdemo.hasthemes.com/assets/images/hero-slider/hero-slider-one/2.jpg',
+      imgUrl: bannerImg2,
       type: 'HandMade',
       content: 'Large, Food Board'
     },
     {
-      imgUrl:
-        'http://lezada.reactdemo.hasthemes.com/assets/images/hero-slider/hero-slider-one/3.jpg',
+      imgUrl: bannerImg4,
       type: 'Accessories',
       content: 'Tribeca Hubert, Pendant'
     }
