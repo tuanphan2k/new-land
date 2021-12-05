@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { Row, Col, Space } from 'antd'
 import BannerSilder from '../../../components/User/BannerSlider'
 import ProductItem from '../../../components/User/ProductItem'
-import { Row, Col } from 'antd'
 import './style.scss'
 
 function HomePage() {
@@ -175,6 +175,45 @@ function HomePage() {
               <ProductItem product={item} />
             </Col>
           ))}
+        </Row>
+      </div>
+      <div className="home-page__province">
+        <h2 className="home-page__province--title">
+          Nhà bán tại các thành phố lớn
+        </h2>
+        <Row gutter={16}>
+          <Col span={6} className="province__item province__item--hor">
+            <img src="https://img.cenhomes.vn/province_hn.jpg" alt="" />
+            <p>Hà Nội</p>
+          </Col>
+          <Col span={6}>
+            <Space gutter={16} direction="vertical">
+              <Col span={12} className="province__item province__item--ver">
+                <img src="https://img.cenhomes.vn/province_hp.jpg" alt="" />
+                <p>Hải Phòng</p>
+              </Col>
+              <Col span={12} className="province__item province__item--ver">
+                <img src="https://img.cenhomes.vn/province_tth.jpg" alt="" />
+                <p>Huế</p>
+              </Col>
+            </Space>
+          </Col>
+          <Col span={6} className="province__item province__item--hor">
+            <Space gutter={16} direction="vertical">
+              <Col span={12} className="province__item province__item--ver">
+                <img src="https://img.cenhomes.vn/province_bd.jpg" alt="" />
+                <p>Bình Dương</p>
+              </Col>
+              <Col span={12} className="province__item province__item--ver">
+                <img src="https://img.cenhomes.vn/province_dn.jpg" alt="" />
+                <p>Đồng Nai</p>
+              </Col>
+            </Space>
+          </Col>
+          <Col span={6} className="province__item province__item--hor">
+            <img src="https://img.cenhomes.vn/province_hcm.jpg" alt="" />
+            <p>TP. Hồ Chí Minh</p>
+          </Col>
         </Row>
       </div>
     </main>
