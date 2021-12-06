@@ -4,7 +4,8 @@ import queryString from 'query-string'
 const axiosClient = axios.create({
   baseURL: 'https://api.newhome.tk/api',
   headers: {
-    'content-type': 'application/json'
+    // 'content-type': 'application/json'
+    'content-type': 'multipart/form-data'
   },
   paramsSerializer: params => queryString.stringify(params)
 })

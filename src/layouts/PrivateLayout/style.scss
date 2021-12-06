@@ -1,0 +1,12 @@
+@import "./src/style/styles.scss";
+
+.private-layout {
+  display: flex;
+  margin: auto;
+
+  &__childs {
+    width: calc(100% - 300px);
+    margin-left: 26px;
+    margin-top: 14px;
+  }
+}
