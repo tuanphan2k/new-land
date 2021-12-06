@@ -1,0 +1,24 @@
+@import './src/style/styles';
+
+.user-page {
+  &__title {
+    margin-bottom: 14px;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  &__main {
+    &--top {
+      margin-bottom: 16px;
+    }
+
+    &--search {
+      max-width: 400px;
+    }
+
+    &--select {
+      width: 120px;
+    }
+  }
+}

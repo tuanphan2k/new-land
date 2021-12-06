@@ -104,7 +104,7 @@ function Header() {
               <HeartOutlined />
               <span className="toolbox__item--number">1</span>
             </li>
-            {userInfo?.account_type === 3 ? (
+            {userInfo?.account_type === 2 ? (
               <li className="toolbox__item">
                 <BorderOuterOutlined />
               </li>
