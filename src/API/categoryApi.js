@@ -14,7 +14,6 @@ const categoryApi = {
     return axiosClient.delete(url)
   },
   addCategory: params => {
-    console.log(params)
     const url = `/category`
     return axiosClient.post(url, params.body, {
       headers: {

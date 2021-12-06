@@ -139,11 +139,13 @@ function UserPage() {
             />
           </Form.Item>
           <Form.Item name="image" label="Hình ảnh">
-            {isAddCategory ? (
-              <Input type="file" onChange={e => handleChangeUpload(e)} />
-            ) : (
-              <img src={categoryDetail.img} alt="" />
-            )}
+            <Row justify="center">
+              {isAddCategory ? (
+                <Input type="file" onChange={e => handleChangeUpload(e)} />
+              ) : (
+                <img src={categoryDetail.img} alt="" />
+              )}
+            </Row>
           </Form.Item>
         </Form>
       </Modal>

@@ -18,7 +18,7 @@ function UserPage() {
   const [userItemForm] = Form.useForm()
 
   useEffect(() => {
-    // dispatch(getUserListAction(filter))
+    // dispatch(getUserListAction())
   }, [filter])
 
   useEffect(() => {
