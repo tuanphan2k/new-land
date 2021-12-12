@@ -1,0 +1,33 @@
+@import './src/style/styles.scss';
+
+.dashboard-page {
+  &__title {
+    margin-bottom: 14px;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  &__chart {
+    &--doughnut {
+      justify-content: center;
+      max-width: 350px;
+      max-height: 350px;
+    }
+  }
+
+  &__statistical {
+    margin-top: 54px;
+
+    &--item {
+      border-radius: 5px !important;
+      border-left: $blue-color 4px solid !important;
+      text-align: center;
+
+      .ant-card-head-title {
+        font-size: 1.8rem;
+        font-weight: 500;
+      }
+    }
+  }
+}

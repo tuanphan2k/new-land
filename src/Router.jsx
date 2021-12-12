@@ -12,6 +12,7 @@ import RegisterPage from './pages/Auth/RegisterPage'
 //admin-pages
 import AdminUserPage from './pages/Admin/UserPage'
 import AdminCategoryPage from './pages/Admin/CategoryPage'
+import AdminDashboard from './pages/Admin/Dashboard'
 
 function BrowserRouter() {
   return (
@@ -26,6 +27,7 @@ function BrowserRouter() {
           path={PATH.CATEGORYADMIN}
           component={AdminCategoryPage}
         />
+        <PrivateLayout exact path={PATH.ADMIN} component={AdminDashboard} />
       </Switch>
     </Router>
   )

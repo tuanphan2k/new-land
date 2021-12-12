@@ -3,14 +3,17 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import './style.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { getCategoryList, addCategory } from '../../../redux/category.slice'
+import {
+  getCategoryList,
+  addCategory,
+  deleteCategory
+} from '../../../redux/category.slice'
 
 function UserPage() {
   const dispatch = useDispatch()
   const categoryList = useSelector(state => state.category)
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
   const [imgUpload, setImgUpload] = useState()
-  console.log(imgUpload)
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [categoryDetail, setcategoryDetail] = useState({})
@@ -76,10 +79,7 @@ function UserPage() {
             />
             <Popconfirm
               title={`Bạn các chắc muốn xoá danh mục này ?`}
-              onConfirm={() => {
-                dispatch()
-                // editUserAction({ userId: record.id, role: 'disable' })
-              }}
+              onConfirm={() => handleDeleteCategory(record.id)}
             >
               <DeleteOutlined className="table-icon icon-danger" />
             </Popconfirm>
@@ -89,6 +89,16 @@ function UserPage() {
       }
     }
   ]
+
+  const handleDeleteCategory = async id => {
+    await dispatch(
+      deleteCategory({
+        token: userInfo.token,
+        id
+      })
+    )
+    await dispatch(getCategoryList())
+  }
 
   const dataSource = categoryList.data?.map(item => {
     return {
