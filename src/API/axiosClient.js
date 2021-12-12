@@ -2,7 +2,7 @@ import axios from 'axios'
 import queryString from 'query-string'
 
 const axiosClient = axios.create({
-  baseURL: 'https://api.newhome.tk/api',
+  baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
     'content-type': 'application/json'
     // 'content-type': 'multipart/form-data'
