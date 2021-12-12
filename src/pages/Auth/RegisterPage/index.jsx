@@ -9,9 +9,9 @@ import history from '../../../utils/history'
 import ReCAPTCHA from 'react-google-recaptcha'
 import './style.scss'
 
-function RegisterPage() {
+function RegisterPage({ isAdmin, setVisibleDrawer }) {
   const dispatch = useDispatch()
-  const [isVerified, setIsVerified] = useState(false)
+  const [isVerified, setIsVerified] = useState(!isAdmin ? false : true)
 
   const onFinish = async values => {
     const { email, firstName, lastName, password, account_type } = values
@@ -32,7 +32,11 @@ function RegisterPage() {
         notification.success({
           message: 'Đăng ký thành công'
         })
-        history.push('/login')
+        if (!isAdmin) {
+          history.push('/login')
+        } else {
+          setVisibleDrawer(false)
+        }
       } catch (err) {
         notification.warning({
           message: 'Email đã bị trùng'
@@ -48,11 +52,11 @@ function RegisterPage() {
   return (
     <main className="register bg-img">
       <Row justify="center" className="register__main container-1">
-        <Col span={12}>
+        <Col span={isAdmin ? 20 : 12}>
           <Form
             name="normal_register"
             className="register-form"
-            initialValues={{}}
+            initialValues={{ account_type: 0 }}
             onFinish={onFinish}
           >
             <p className="register-title">Tạo tài khoản ngay!</p>
@@ -147,16 +151,29 @@ function RegisterPage() {
                 }
               ]}
             >
-              <Select placeholder="Bạn tạo tài khoản gì">
-                <Select.Option value={1}>Người mua </Select.Option>
-                <Select.Option value={2}>Người bán</Select.Option>
+              <Select
+                placeholder="Bạn tạo tài khoản gì"
+                defaultValue={isAdmin ? 0 : null}
+              >
+                {!isAdmin ? (
+                  <>
+                    <Select.Option value={1}>Người mua </Select.Option>
+                    <Select.Option value={2}>Người bán</Select.Option>
+                  </>
+                ) : (
+                  <Select.Option value={0}>Admin</Select.Option>
+                )}
               </Select>
             </Form.Item>
             <Row justify="center">
-              <ReCAPTCHA
-                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                onChange={() => setIsVerified(!isVerified)}
-              />
+              {!isAdmin ? (
+                <ReCAPTCHA
+                  sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                  onChange={() => setIsVerified(!isVerified)}
+                />
+              ) : (
+                ''
+              )}
             </Row>
             <Form.Item>
               <Row>
@@ -169,9 +186,13 @@ function RegisterPage() {
                   Đăng ký
                 </Button>
               </Row>
-              <Link to="/" className="register-form-home">
-                Trở về trang chủ
-              </Link>
+              {!isAdmin ? (
+                <Link to="/" className="register-form-home">
+                  Trở về trang chủ
+                </Link>
+              ) : (
+                ''
+              )}
             </Form.Item>
           </Form>
         </Col>

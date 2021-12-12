@@ -5,16 +5,19 @@ const categoryApi = {
     const url = `/category`
     return axiosClient.get(url)
   },
-  deleteCategory: categoryId => {
-    const url = `/category/${categoryId}`
-    return axiosClient.delete(url)
+  deleteCategory: params => {
+    const url = `/category/${params.id}`
+    return axiosClient.delete(url, {
+      headers: {
+        Authorization: `Bearer ${params.token}`
+      }
+    })
   },
   editCategory: categoryId => {
     const url = `/category/${categoryId}`
     return axiosClient.delete(url)
   },
   addCategory: params => {
-    console.log(params)
     const url = `/category`
     return axiosClient.post(url, params.body, {
       headers: {

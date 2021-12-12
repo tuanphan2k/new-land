@@ -25,6 +25,18 @@ export const addCategory = createAsyncThunk(
   }
 )
 
+export const deleteCategory = createAsyncThunk(
+  'category/addCategory',
+  async (params, thunkAPI) => {
+    try {
+      const response = await categoryApi.deleteCategory(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
 const category = createSlice({
   name: 'category',
   initialState: {
@@ -52,6 +64,16 @@ const category = createSlice({
       state.loading = true
     },
     [addCategory.rejected]: (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    },
+    [deleteCategory.fulfilled]: (state, action) => {
+      state.loading = false
+    },
+    [deleteCategory.pending]: state => {
+      state.loading = true
+    },
+    [deleteCategory.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     }

@@ -21,7 +21,11 @@ function LoginPage() {
         notification.success({
           message: 'Đăng nhập thành công'
         })
-        history.push('/')
+        if (res.payload.user.account_type === 0) {
+          history.push('/admin')
+        } else {
+          history.push('/')
+        }
       } catch (err) {
         notification.warning({
           message: 'Email hoặc mật khẩu không đúng'
