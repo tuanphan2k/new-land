@@ -25,6 +25,18 @@ export const addCategory = createAsyncThunk(
   }
 )
 
+export const editCategory = createAsyncThunk(
+  'category/editCategory',
+  async (params, thunkAPI) => {
+    try {
+      const response = await categoryApi.editCategory(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteCategory = createAsyncThunk(
   'category/addCategory',
   async (params, thunkAPI) => {
@@ -64,6 +76,16 @@ const category = createSlice({
       state.loading = true
     },
     [addCategory.rejected]: (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    },
+    [editCategory.fulfilled]: (state, action) => {
+      state.loading = false
+    },
+    [editCategory.pending]: state => {
+      state.loading = true
+    },
+    [editCategory.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     },

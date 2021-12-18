@@ -5,6 +5,7 @@ const categoryApi = {
     const url = `/category`
     return axiosClient.get(url)
   },
+
   deleteCategory: params => {
     const url = `/category/${params.id}`
     return axiosClient.delete(url, {
@@ -13,16 +14,21 @@ const categoryApi = {
       }
     })
   },
-  editCategory: categoryId => {
-    const url = `/category/${categoryId}`
-    return axiosClient.delete(url)
+
+  editCategory: params => {
+    const url = `/category/${params.categoryId}`
+    return axiosClient.patch(url, params.body, {
+      headers: {
+        Authorization: `Bearer ${params.token}`
+      }
+    })
   },
+
   addCategory: params => {
     const url = `/category`
     return axiosClient.post(url, params.body, {
       headers: {
-        Authorization: `Bearer ${params.token}`,
-        'content-type': 'multipart/form-data'
+        Authorization: `Bearer ${params.token}`
       }
     })
   }

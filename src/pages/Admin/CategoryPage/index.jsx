@@ -1,4 +1,13 @@
-import { Table, Modal, Popconfirm, Form, Row, Input, Button } from 'antd'
+import {
+  Table,
+  Modal,
+  Popconfirm,
+  Form,
+  Row,
+  Input,
+  Button,
+  notification
+} from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import './style.scss'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,14 +15,17 @@ import { useEffect, useState } from 'react'
 import {
   getCategoryList,
   addCategory,
-  deleteCategory
+  deleteCategory,
+  editCategory
 } from '../../../redux/category.slice'
+
+import axios from 'axios'
 
 function UserPage() {
   const dispatch = useDispatch()
   const categoryList = useSelector(state => state.category)
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-  const [imgUpload, setImgUpload] = useState()
+  const [urlImage, setUrlImage] = useState('')
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [categoryDetail, setcategoryDetail] = useState({})
@@ -75,6 +87,7 @@ function UserPage() {
                   name: record.name,
                   id: record.id
                 })
+                setUrlImage(record.img)
               }}
             />
             <Popconfirm
@@ -103,29 +116,49 @@ function UserPage() {
   const dataSource = categoryList.data?.map(item => {
     return {
       ...item,
-      image: `https://api.newhome.tk${item.image}`,
       key: item.id
     }
   })
 
-  function handleSubmitCategory() {
+  async function handleSubmitCategory() {
     const values = categoryItemForm.getFieldValue()
+    delete values?.img
     if (isAddCategory) {
-      dispatch(
+      setIsModalVisible(false)
+      await dispatch(
         addCategory({
           token: userInfo.token,
-          body: { ...values, image: imgUpload }
+          body: { ...values, image: urlImage }
+        })
+      )
+    } else {
+      setIsModalVisible(false)
+      await dispatch(
+        editCategory({
+          token: userInfo.token,
+          categoryId: categoryDetail?.id,
+          body: { ...values, image: urlImage }
         })
       )
     }
-    // dispatch(editUserAction({ userId: values.id, role: values.role }))
-    setIsModalVisible(false)
+
+    setcategoryDetail('')
+    await dispatch(getCategoryList())
   }
 
-  function handleChangeUpload(e) {
-    if (e.target.files[0]) {
-      setImgUpload(e.target.files[0])
-    }
+  function handleChangeUpload(file) {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('upload_preset', 'x31ok4ih')
+
+    axios
+      .post('https://api.cloudinary.com/v1_1/dkimwmu70/image/upload', formData)
+      .then(response => {
+        setUrlImage(response.data.secure_url)
+        notification.success({
+          message: 'Thêm ảnh thành công'
+        })
+      })
   }
 
   return (
@@ -134,26 +167,72 @@ function UserPage() {
         title={isAddCategory ? 'Thêm danh mục' : 'Chỉnh sửa danh mục'}
         visible={isModalVisible}
         onOk={() => handleSubmitCategory()}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={() => {
+          setUrlImage('')
+          setIsModalVisible(false)
+        }}
+        cancelText="Huỷ"
       >
         <Form
           initialValues={categoryDetail}
           form={categoryItemForm}
           name="categoryItemForm"
           encType="multipart/form-data"
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
         >
-          <Form.Item label="Tên" name="name">
+          <Form.Item
+            label="Tên"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng thêm tên danh mục!'
+              }
+            ]}
+          >
             <Input
               placeholder="Nhập vào tên danh mục"
               value={categoryDetail.email}
             />
           </Form.Item>
-          <Form.Item name="image" label="Hình ảnh">
-            <Row justify="center">
+          <Form.Item label="Hình ảnh">
+            <Row justify="space-between" align="middle">
               {isAddCategory ? (
-                <Input type="file" onChange={e => handleChangeUpload(e)} />
+                <>
+                  <div></div>
+                  <img
+                    style={{ width: '100px' }}
+                    src={
+                      urlImage ||
+                      'https://lh3.googleusercontent.com/proxy/H7eJ1vq1S5fgbXGzChzzVkZ9VbfQCFQ1mst-4Xba0yZUt_3VZgQaM0O_nU3n-f7kdNeq7qyNjQhKivTgfNumK-Y0njG-0nPItyMNkbiEGRUB-cmsHBXBd09NEWb6'
+                    }
+                    alt=""
+                  />
+                  <span class="btn btn-primary btn-file">
+                    Chọn ảnh
+                    <input
+                      onChange={e => handleChangeUpload(e.target.files[0])}
+                      type="file"
+                    ></input>
+                  </span>
+                </>
               ) : (
-                <img src={categoryDetail.img} alt="" />
+                <>
+                  <div></div>
+                  <img
+                    style={{ width: '100px' }}
+                    src={urlImage || categoryDetail?.img}
+                    alt=""
+                  />
+                  <span class="btn btn-primary btn-file">
+                    Chỉnh sửa
+                    <input
+                      onChange={e => handleChangeUpload(e.target.files[0])}
+                      type="file"
+                    ></input>
+                  </span>
+                </>
               )}
             </Row>
           </Form.Item>

@@ -19,7 +19,7 @@ const userApi = {
     })
   },
 
-  updateActive: (params, data) => {
+  updateActive: params => {
     const url = `/user/active/${params.id}`
     return axiosClient.get(url, {
       headers: {

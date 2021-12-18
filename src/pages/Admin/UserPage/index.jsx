@@ -121,6 +121,7 @@ function UserPage() {
         visible={isModalVisible}
         onOk={() => handleEditUser()}
         onCancel={() => setIsModalVisible(false)}
+        cancelText="Huỷ"
       >
         <Form
           initialValues={userDetail}
