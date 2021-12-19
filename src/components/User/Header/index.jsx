@@ -61,6 +61,10 @@ function Header() {
         <Menu.Item key="3" onClick={() => history.push('/admin')}>
           Trở về trang Admin
         </Menu.Item>
+      ) : userInfo?.account_type === 2 ? (
+        <Menu.Item key="4" onClick={() => history.push('/seller/employee')}>
+          Quản lý
+        </Menu.Item>
       ) : (
         ''
       )}

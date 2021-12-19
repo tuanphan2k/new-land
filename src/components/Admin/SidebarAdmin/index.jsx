@@ -7,11 +7,12 @@ import {
   AppstoreOutlined,
   HomeOutlined,
   LogoutOutlined,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
+  TeamOutlined
 } from '@ant-design/icons'
 import './style.scss'
 
-function SidebarAdmin() {
+function SidebarAdmin({ isSeller }) {
   const { Sider } = Layout
   return (
     <section className="sidebar">
@@ -28,42 +29,58 @@ function SidebarAdmin() {
             </div>
           </Row>
           <Menu theme="" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item
-              key="1"
-              icon={<HomeOutlined />}
-              onClick={() => {
-                history.push(PATH.HOMEADMIN)
-              }}
-            >
-              Dashboard
-            </Menu.Item>
-            <Menu.Item
-              key="2"
-              icon={<AppstoreOutlined />}
-              onClick={() => {
-                history.push(PATH.CATEGORYADMIN)
-              }}
-            >
-              Quản lý danh mục
-            </Menu.Item>
-            <Menu.Item
-              key="4"
-              icon={<UsergroupAddOutlined />}
-              onClick={() => {
-                history.push(PATH.USERADMIN)
-              }}
-            >
-               Quản lý người dùng
-            </Menu.Item>
-            <Menu.Item
-              key="7"
-              icon={<LogoutOutlined />}
-              onClick={() => {
-                history.push(PATH.HOME)
-              }}
-            >
-              Quay về trang người dùng
-            </Menu.Item>
+            {isSeller ? (
+              <>
+                <Menu.Item
+                  key="1"
+                  icon={<TeamOutlined />}
+                  onClick={() => {
+                    history.push(PATH.HOMEADMIN)
+                  }}
+                >
+                  Quản lý nhân viên
+                </Menu.Item>
+              </>
+            ) : (
+              <>
+                <Menu.Item
+                  key="1"
+                  icon={<HomeOutlined />}
+                  onClick={() => {
+                    history.push(PATH.HOMEADMIN)
+                  }}
+                >
+                  Dashboard
+                </Menu.Item>
+                <Menu.Item
+                  key="2"
+                  icon={<AppstoreOutlined />}
+                  onClick={() => {
+                    history.push(PATH.CATEGORYADMIN)
+                  }}
+                >
+                  Quản lý danh mục
+                </Menu.Item>
+                <Menu.Item
+                  key="4"
+                  icon={<UsergroupAddOutlined />}
+                  onClick={() => {
+                    history.push(PATH.USERADMIN)
+                  }}
+                >
+                   Quản lý người dùng
+                </Menu.Item>
+                <Menu.Item
+                  key="7"
+                  icon={<LogoutOutlined />}
+                  onClick={() => {
+                    history.push(PATH.HOME)
+                  }}
+                >
+                  Quay về trang người dùng
+                </Menu.Item>
+              </>
+            )}
           </Menu>
         </Sider>
       </Layout>
