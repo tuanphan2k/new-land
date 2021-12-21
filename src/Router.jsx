@@ -16,6 +16,7 @@ import AdminCategoryPage from './pages/Admin/CategoryPage'
 import AdminDashboard from './pages/Admin/Dashboard'
 //seller-pages
 import SellerEmployee from './pages/Seller/Employee'
+import PostProduct from './pages/Seller/PostProduct'
 
 function BrowserRouter() {
   return (
@@ -24,7 +25,6 @@ function BrowserRouter() {
         <DefaultLayout exact path={PATH.HOME} component={UserHomePage} />
         <DefaultLayout exact path={PATH.LOGIN} component={LoginPage} />
         <DefaultLayout exact path={PATH.REGISTER} component={RegisterPage} />
-        {/* admin */}
         <PrivateLayout exact path={PATH.USERADMIN} component={AdminUserPage} />
         <PrivateLayout
           exact
@@ -32,8 +32,8 @@ function BrowserRouter() {
           component={AdminCategoryPage}
         />
         <PrivateLayout exact path={PATH.ADMIN} component={AdminDashboard} />
-        {/* seller */}
         <SellerLayout exact path={PATH.EMPLOYEE} component={SellerEmployee} />
+        <DefaultLayout exact path={PATH.POSTPRODUCT} component={PostProduct} />
       </Switch>
     </Router>
   )

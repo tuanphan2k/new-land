@@ -12,7 +12,8 @@ const PATH = {
   ADMIN: '/admin',
   //seller
   SELLER: '/seller',
-  EMPLOYEE: '/seller/employee'
+  EMPLOYEE: '/seller/employee',
+  POSTPRODUCT: '/post-product'
 }
 
 export default PATH

@@ -18,7 +18,11 @@ function Employee() {
   const [userItemForm] = Form.useForm()
 
   useEffect(() => {
-    dispatch(getEmployeeList({ tokens: userInfo.token, user_id: userInfo.id }))
+    if (visibleDrawer) {
+      dispatch(
+        getEmployeeList({ tokens: userInfo.token, user_id: userInfo.id })
+      )
+    }
   }, [visibleDrawer])
 
   useEffect(() => {
