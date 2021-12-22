@@ -17,6 +17,7 @@ import AdminDashboard from './pages/Admin/Dashboard'
 //seller-pages
 import SellerEmployee from './pages/Seller/Employee'
 import PostProduct from './pages/Seller/PostProduct'
+import ProducPage from './pages/Seller/Product'
 
 function BrowserRouter() {
   return (
@@ -33,6 +34,7 @@ function BrowserRouter() {
         />
         <PrivateLayout exact path={PATH.ADMIN} component={AdminDashboard} />
         <SellerLayout exact path={PATH.EMPLOYEE} component={SellerEmployee} />
+        <SellerLayout exact path={PATH.PRODUCT} component={ProducPage} />
         <DefaultLayout exact path={PATH.POSTPRODUCT} component={PostProduct} />
       </Switch>
     </Router>

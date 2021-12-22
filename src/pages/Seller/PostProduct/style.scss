@@ -3,13 +3,22 @@
 .post-product {
   &__category {
     position: relative;
-    // margin-bottom: 30px;
     background-image: url('https://web-sdk.cenhomes.vn/img/step1-bg.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
     height: 100vh;
+
+    &::after {
+      content: '';
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(117.94deg, #000 2.61%, transparent 62.19%);
+      height: 100%;
+    }
 
     &--content {
       position: absolute;
@@ -18,6 +27,12 @@
       margin: 0 auto;
       max-width: 1200px;
       color: $white-color;
+      z-index: 1;
+
+      .ant-select-selector {
+        height: 34px !important;
+        font-size: 2.1rem;
+      }
 
       h2 {
         color: $white-color;

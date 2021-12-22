@@ -9,11 +9,14 @@ import {
   notification,
   InputNumber
 } from 'antd'
+import axios from 'axios'
 import { DoubleLeftOutlined } from '@ant-design/icons'
+import { unwrapResult } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { getEmployeeList } from '../../../redux/employee.slice'
-import axios from 'axios'
+import { postProduct } from '../../../redux/product.slice'
+import history from '../../../utils/history'
 import './style.scss'
 
 function PostProduct() {
@@ -102,6 +105,26 @@ function PostProduct() {
           message: 'Thêm ảnh thành công'
         })
       })
+  }
+
+  async function handleFinalSubmit() {
+    try {
+      const res = await dispatch(
+        postProduct({
+          tokens: userInfo.token,
+          body: infoPost
+        })
+      )
+      unwrapResult(res)
+      notification.success({
+        message: res.payload.msg
+      })
+      history.push('/seller/products')
+    } catch (err) {
+      notification.warning({
+        message: 'Thêm thất bại'
+      })
+    }
   }
 
   return (
@@ -225,7 +248,7 @@ function PostProduct() {
                 </Col>
                 <Col span={12}>
                   <Form.Item
-                    label="Quận/ Huyện"
+                    label="Quận / Huyện"
                     name="district"
                     rules={[
                       {
@@ -265,7 +288,7 @@ function PostProduct() {
                     ]}
                   >
                     <Select
-                      placeholder="Chọn Tỉnh / Thành phố"
+                      placeholder="Chọn Phường / Xã"
                       onChange={value =>
                         setInfoPost({ ...infoPost, ward: value })
                       }
@@ -281,28 +304,7 @@ function PostProduct() {
                     </Select>
                   </Form.Item>
                 </Col>
-              </Row>
-              <Row gutter={46}>
                 <Col span={12}>
-                  <Form.Item
-                    label="Giá bán mong muốn"
-                    name="deposit_price"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Vui lòng nhập vào giá bán!'
-                      }
-                    ]}
-                  >
-                    <InputNumber
-                      style={{ width: 300 }}
-                      defaultValue="0"
-                      min="0"
-                      stringMode
-                    />
-                  </Form.Item>
-                </Col>
-                <Col>
                   <Form.Item
                     label="Nhân viên bán"
                     name="employees"
@@ -320,6 +322,87 @@ function PostProduct() {
                         </Select.Option>
                       ))}
                     </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={46}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Giá bán mong muốn"
+                    name="price"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập vào giá bán!'
+                      }
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: 300 }}
+                      min="0"
+                      placeholder="Giá mong muốn"
+                      stringMode
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Số tiền cần đặt cọc"
+                    name="deposit_price"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập vào tiền đặt cọc!'
+                      }
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: 300 }}
+                      min="0"
+                      max={infoPost?.price * 0.5}
+                      placeholder="Tiền đặt cọc"
+                      stringMode
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={46}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Hạn ngày đặt cọc"
+                    name="deposit_time"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập vào hạn ngày đặt cọc!'
+                      }
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: 200 }}
+                      min="1"
+                      placeholder="Số lượng"
+                      stringMode
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Số lượng bất động sản"
+                    name="quantity"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập vào số lượng!'
+                      }
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: 200 }}
+                      min="1"
+                      placeholder="Số lượng"
+                      stringMode
+                    />
                   </Form.Item>
                 </Col>
               </Row>
@@ -376,7 +459,11 @@ function PostProduct() {
                 >
                   Quay lại
                 </Button>
-                <Button type="primary" size="large">
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => handleFinalSubmit()}
+                >
                   Hoàn tất đăng bán
                 </Button>
               </Row>

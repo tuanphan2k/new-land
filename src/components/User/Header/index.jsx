@@ -110,7 +110,9 @@ function Header() {
             </li>
             {userInfo?.account_type === 2 ? (
               <li className="toolbox__item">
-                <BorderOuterOutlined />
+                <BorderOuterOutlined
+                  onClick={() => history.push('/post-product')}
+                />
               </li>
             ) : (
               ''

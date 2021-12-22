@@ -35,10 +35,19 @@ function SidebarAdmin({ isSeller }) {
                   key="1"
                   icon={<TeamOutlined />}
                   onClick={() => {
-                    history.push(PATH.HOMEADMIN)
+                    history.push(PATH.EMPLOYEE)
                   }}
                 >
                   Quản lý nhân viên
+                </Menu.Item>
+                <Menu.Item
+                  key="2"
+                  icon={<AppstoreOutlined />}
+                  onClick={() => {
+                    history.push(PATH.PRODUCT)
+                  }}
+                >
+                  Quản lý bất động sản
                 </Menu.Item>
               </>
             ) : (
