@@ -119,7 +119,7 @@ function PostProduct() {
       notification.success({
         message: res.payload.msg
       })
-      history.push('/seller/products')
+      history.push('/seller/product')
     } catch (err) {
       notification.warning({
         message: 'Thêm thất bại'
