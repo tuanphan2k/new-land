@@ -1,0 +1,8 @@
+@import '/src/style/styles.scss';
+
+.show-product {
+  min-height: 110vh;
+  &__content {
+    margin: 34px;
+  }
+}

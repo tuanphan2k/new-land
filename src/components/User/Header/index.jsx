@@ -31,7 +31,10 @@ function Header() {
   function renderCategory() {
     if (!categoryList.loading) {
       return categoryList.data?.map(item => (
-        <li key={item.id} onClick={() => history.push(`/category/${item.id}`)}>
+        <li
+          key={item.id}
+          onClick={() => history.push(`/product-list/${item.id}`)}
+        >
           {item.name}
         </li>
       ))

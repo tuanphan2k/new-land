@@ -1,0 +1,28 @@
+@import '../../../style/styles.scss';
+
+.page__top {
+  position: relative;
+  height: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  h2 {
+    position: absolute;
+    margin: 0;
+    padding: 50px;
+    font-size: 4rem;
+    color: $white-color;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(#333, 0.3);
+    height: 100%;
+  }
+}

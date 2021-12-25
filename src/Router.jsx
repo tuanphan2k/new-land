@@ -7,6 +7,7 @@ import PrivateLayout from './layouts/PrivateLayout'
 import SellerLayout from './layouts/SellerLayout'
 //pages
 import UserHomePage from './pages/User/HomePage'
+import ProductListPage from './pages/User/ProductList'
 //auth-pages
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
@@ -36,6 +37,11 @@ function BrowserRouter() {
         <SellerLayout exact path={PATH.EMPLOYEE} component={SellerEmployee} />
         <SellerLayout exact path={PATH.PRODUCT} component={ProducPage} />
         <DefaultLayout exact path={PATH.POSTPRODUCT} component={PostProduct} />
+        <DefaultLayout
+          exact
+          patch={PATH.PRODUCTLIST}
+          component={ProductListPage}
+        />
       </Switch>
     </Router>
   )

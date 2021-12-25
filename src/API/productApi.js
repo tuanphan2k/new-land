@@ -9,6 +9,7 @@ const productApi = {
       }
     })
   },
+
   getProductList: params => {
     const url = `/product/get/${params.user_id}`
     return axiosClient.get(url, {
@@ -25,6 +26,16 @@ const productApi = {
         Authorization: `Bearer ${params.token}`
       }
     })
+  },
+
+  showProductList: params => {
+    const url = `/product/category/${params}`
+    return axiosClient.get(url)
+  },
+
+  showProductListLocal: params => {
+    const url = `/product/location/${params}`
+    return axiosClient.get(url)
   }
 }
 

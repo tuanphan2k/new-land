@@ -1,11 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Row, Col, Space } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { showProductList } from '../../../redux/product.slice'
 import BannerSilder from '../../../components/User/BannerSlider'
 import ProductItem from '../../../components/User/ProductItem'
 import './style.scss'
 
 function HomePage() {
+  const dispatch = useDispatch()
+  const productListData = useSelector(state => state.product)
   const [localSelected, setLocalSelected] = useState(1)
+
+  useEffect(() => {
+    dispatch(showProductList('Hà Nội'))
+  }, [])
+
+  function handleFilterLocal(id, name) {
+    setLocalSelected(id)
+    dispatch(showProductList(name))
+  }
+
+  console.log(productListData)
 
   const productList = [
     {
@@ -146,38 +161,40 @@ function HomePage() {
   ]
 
   return (
-    <main className="home-page container-1">
-      <BannerSilder />
-      <div className="home-page__banner">
+    <main className="home-page">
+      <BannerSilder className="container-1" />
+      <div className="home-page__banner container-1">
         <img
           src="https://img.cenhomes.vn/cms/baner-mid-desktop111520212-1440.jpg"
           alt=""
         />
       </div>
       <div className="home-page__hot">
-        <h2 className="home-page__hot--title">Các địa điểm nổi bật</h2>
-        <Row className="home-page__hot--local">
-          {localList.map(item => (
-            <div
-              key={item.id}
-              className={`home-page__hot--local-item ${
-                item.id === localSelected ? 'active' : ''
-              }`}
-              onClick={() => setLocalSelected(item.id)}
-            >
-              {item.name}
-            </div>
-          ))}
-        </Row>
-        <Row gutter={24}>
-          {productList.map(item => (
-            <Col span={6} key={item.id}>
-              <ProductItem product={item} />
-            </Col>
-          ))}
-        </Row>
+        <div className="home-page__hot--product">
+          <h2 className="home-page__hot--title">Các địa điểm nổi bật</h2>
+          <Row className="home-page__hot--local">
+            {localList.map(item => (
+              <div
+                key={item.id}
+                className={`home-page__hot--local-item ${
+                  item.id === localSelected ? 'active' : ''
+                }`}
+                onClick={() => handleFilterLocal(item.id, item.name)}
+              >
+                {item.name}
+              </div>
+            ))}
+          </Row>
+          <Row gutter={24}>
+            {productList.map(item => (
+              <Col span={6} key={item.id}>
+                <ProductItem product={item} />
+              </Col>
+            ))}
+          </Row>
+        </div>
       </div>
-      <div className="home-page__province">
+      <div className="home-page__province container-1">
         <h2 className="home-page__province--title">
           Nhà bán tại các thành phố lớn
         </h2>

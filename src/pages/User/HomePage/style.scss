@@ -1,6 +1,7 @@
 @import '../../../style//styles.scss';
 
 .home-page {
+  margin-bottom: 34px;
   &__banner {
     img {
       display: block;
@@ -22,6 +23,11 @@
       color: $white-color;
       font-size: 4rem;
       text-transform: uppercase;
+    }
+
+    &--product {
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     &--local {

@@ -1,4 +1,4 @@
-@import "./src/style/styles.scss";
+@import './src/style/styles.scss';
 
 .product-item {
   border: 1px solid $bg-gray;
@@ -9,11 +9,19 @@
   &__img {
     position: relative;
 
-    img {
-      border-radius: 6px 6px 0 0;
-      display: block;
-      width: 100%;
-      height: auto;
+    &--section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      background-color: $bg-gray;
+
+      img {
+        border-radius: 6px 6px 0 0;
+        display: block;
+        width: 100%;
+        height: auto;
+      }
     }
 
     &--new {
@@ -29,7 +37,7 @@
   }
 
   &__content {
-    padding: 0 20px;
+    padding: 10px 10px 0;
     background-color: $white-color;
 
     &--name {
@@ -72,7 +80,6 @@
   }
 
   &__comment {
-    padding-left: 15px;
     display: flex;
     align-items: center;
     color: $text-gray;
