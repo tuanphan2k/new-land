@@ -5,4 +5,33 @@
   &__content {
     margin: 34px;
   }
+
+  .sidebar {
+    display: flex;
+    justify-content: center;
+
+    &-item {
+      font-size: 1.7rem;
+      transition: all ease 0.3s;
+      color: $text-gray;
+      cursor: pointer;
+
+      &:hover {
+        color: $text-color;
+      }
+    }
+  }
+
+  .sider__price {
+    &--title {
+      margin-bottom: 8px;
+      font-size: 2.2rem;
+      color: $text-color;
+    }
+  }
+}
+
+.sidebar-item.active {
+  color: $text-color !important;
+  text-decoration: underline;
 }

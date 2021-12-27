@@ -1,7 +1,31 @@
 import './style.scss'
-import React, { useState } from 'react'
+import { Row, Col } from 'antd'
+function ProductInfo({ detail, infoDetail }) {
+  const {
+    id,
+    city,
+    district,
+    ward,
+    quantity,
+    employees,
+    description,
+    deposit_time,
+    deposit_price,
+    name,
+    image,
+    price
+  } = detail
 
-function ProductInfo() {
+  const { imageList, infoList } = infoDetail || {}
+
+  console.log(price)
+
+  console.log(infoList)
+
+  function sliceAdress(address) {
+    return address?.split('-')[1]
+  }
+
   const commnues = [
     {
       name: 'Tân Phú'
@@ -36,84 +60,75 @@ function ProductInfo() {
       name: 'Bình Tân'
     }
   ]
-  const attributes = [
-    {
-      name: 'Loại hình'
-    },
-    {
-      name: 'Diện tích'
-    },
-    {
-      name: 'Số tầng'
-    },
-    {
-      name: 'Hướng nhà'
-    },
-    {
-      name: 'Số phòng ngủ'
-    },
-    {
-      name: 'Số phòng tắm'
-    }
-  ]
+
   return (
-    <div className="product-info">
-      <div className="product-info__left">
-        <div className="basic-info">
-          <h1 className="page-title">
-            Nhà mặt tiền 3 lầu 67m² Trần Thủ Độ Phú Trung Tân Phú Giá 8.7 tỷ
-          </h1>
-          <div className="address">
-            <p className="location">
-              Phường Phú Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh
-            </p>
-          </div>
-          <h4 className="tab-title">Thông tin mô tả</h4>
-          <div className="wrap-description">
-            <div className="description">
-              Nhà 1 đời chủ chưa qua đầu tư xách vali vào ở vào ở ngay thôi{' '}
-              <br />
-              Diện tích <br />
-              vị trí khu dân trí cao <br />
-              kết cấu nhà như mới <br />
+    <div className="" style={{ display: 'block' }}>
+      <div className="product-info">
+        <div className="product-info__left">
+          <div className="basic-info">
+            <Row justify="space-between">
+              <h1 className="page-title">{name}</h1>
+              <h1>{price} vnđ</h1>
+            </Row>
+            <div className="address">
+              <p className="location" style={{ fontSize: '1.6rem' }}>
+                {`${sliceAdress(ward)} - ${sliceAdress(
+                  district
+                )} - ${sliceAdress(city)}`}
+              </p>
             </div>
-          </div>
-          <h4 className="tab-title">Đặc điểm</h4>
-          <div className="block-properties">
-            <div className="properties">
-              <ul className="list-properties">
-                {attributes.map((item, index) => (
-                  <li className="properties-item" key={index}>
-                    {item.name}:
-                  </li>
-                ))}
-              </ul>
+            <h4 className="tab-title">Thông tin mô tả</h4>
+            <div className="wrap-description" style={{ fontSize: '1.8rem' }}>
+              <div className="description">{description}</div>
+            </div>
+            <h4 className="tab-title">Đặc điểm</h4>
+            <div className="block-properties">
+              <div className="properties">
+                <ul className="list-properties">
+                  {infoList?.map((item, index) => (
+                    <Row gutter={48}>
+                      <Col span={4}>
+                        <li className="properties-item" key={index}>
+                          {item.title}:
+                        </li>
+                      </Col>
+                      <Col span={20}>
+                        <li className="properties-item" key={index}>
+                          {item.content}
+                        </li>
+                      </Col>
+                    </Row>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="product-info__right">
-        <div className="item-sidebar">
-          <h3 className="title">Mua bán nhà mặt tiền quận Tân Phú</h3>
-          <ul className="list">
-            {commnues.map((item, index) => (
-              <li className="list-item" key={index}>
-                {item.name}
-                <span className="count">624</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="item-sidebar">
-          <h3 className="title">Mua bán nhà mặt tiền thành phố Hồ Chí Minh</h3>
-          <ul className="list">
-            {districts.map((item, index) => (
-              <li className="list-item" key={index}>
-                {item.name}
-                <span className="count">624</span>
-              </li>
-            ))}
-          </ul>
+        <div className="product-info__right">
+          <div className="item-sidebar">
+            <h3 className="title">Mua bán nhà mặt tiền quận Tân Phú</h3>
+            <ul className="list">
+              {commnues.map((item, index) => (
+                <li className="list-item" key={index}>
+                  {item.name}
+                  <span className="count">624</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="item-sidebar">
+            <h3 className="title">
+              Mua bán nhà mặt tiền thành phố Hồ Chí Minh
+            </h3>
+            <ul className="list">
+              {districts.map((item, index) => (
+                <li className="list-item" key={index}>
+                  {item.name}
+                  <span className="count">624</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

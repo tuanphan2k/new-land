@@ -7,8 +7,6 @@ function ProductItem(props) {
   const { id, name, status, image, price, alt, address, productType } =
     props.product
 
-  console.log(props)
-
   function sliceAdress(address) {
     return address?.split('-')[1]
   }
@@ -20,7 +18,7 @@ function ProductItem(props) {
           <img
             src={image}
             alt={alt}
-            onClick={() => history.push(`/product-detail/${id}`)}
+            onClick={() => history.push(`/detail/${id}`)}
           />
         </div>
         <div className="product-item__img--new"> {status} </div>
@@ -28,7 +26,7 @@ function ProductItem(props) {
           <li>
             <HeartOutlined />
           </li>
-          <li onClick={() => history.push(`/product-detail/${id}`)}>
+          <li onClick={() => history.push(`/detail/${id}`)}>
             <SearchOutlined />
           </li>
         </ul>
@@ -42,7 +40,7 @@ function ProductItem(props) {
         </Row>
         <Row justify="space-between">
           <span className="product-item__comment">Dự án</span>
-          <p className="product-item__content--price">{`$${price}`}</p>
+          <p className="product-item__content--price">{`${price}vnđ`}</p>
         </Row>
       </div>
     </div>

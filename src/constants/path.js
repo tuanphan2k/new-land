@@ -1,4 +1,6 @@
 const PATH = {
+  PRODUCTLIST: '/product-list/:id',
+  PRODUCTDETAIL: '/detail/:id',
   HOME: '/',
   //auth
   LOGIN: '/login',
@@ -14,8 +16,7 @@ const PATH = {
   SELLER: '/seller',
   EMPLOYEE: '/seller/employee',
   POSTPRODUCT: '/post-product',
-  PRODUCT: '/seller/product',
-  PRODUCTLIST: '/product-list/:id'
+  PRODUCT: '/seller/product'
 }
 
 export default PATH

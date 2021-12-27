@@ -26,7 +26,7 @@ export const getProductList = createAsyncThunk(
 )
 
 export const deleteProduct = createAsyncThunk(
-  'employee/deleteProduct',
+  'product/deleteProduct',
   async (params, thunkAPI) => {
     try {
       const response = await productApi.deleteProduct(params)

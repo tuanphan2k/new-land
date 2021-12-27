@@ -1,0 +1,21 @@
+@import '../../../style/styles.scss';
+
+.product-detail {
+  min-height: 90vh;
+  margin: 24px 0;
+
+  &__slider {
+    max-height: 550px;
+
+    .img-block {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      
+      img {
+        display: block;
+        max-height: 500px;
+      }
+    }
+  }
+}

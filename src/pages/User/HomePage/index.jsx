@@ -20,8 +20,6 @@ function HomePage() {
     dispatch(showProductList(name))
   }
 
-  console.log(productListData)
-
   const productList = [
     {
       id: 3,
@@ -162,7 +160,9 @@ function HomePage() {
 
   return (
     <main className="home-page">
-      <BannerSilder className="container-1" />
+      <div style={{ width: '100%', overflow: 'hidden' }}>
+        <BannerSilder className="container-1" />
+      </div>
       <div className="home-page__banner container-1">
         <img
           src="https://img.cenhomes.vn/cms/baner-mid-desktop111520212-1440.jpg"

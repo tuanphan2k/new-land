@@ -1,5 +1,3 @@
-import News from './components/User/News'
-import ProductInfo from './components/User/ProductInfo'
 import Router from './Router'
 
 function App() {

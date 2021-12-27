@@ -8,6 +8,7 @@ import SellerLayout from './layouts/SellerLayout'
 //pages
 import UserHomePage from './pages/User/HomePage'
 import ProductListPage from './pages/User/ProductList'
+import ProductDetailPage from './pages/User/ProductDetail'
 //auth-pages
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
@@ -37,10 +38,16 @@ function BrowserRouter() {
         <SellerLayout exact path={PATH.EMPLOYEE} component={SellerEmployee} />
         <SellerLayout exact path={PATH.PRODUCT} component={ProducPage} />
         <DefaultLayout exact path={PATH.POSTPRODUCT} component={PostProduct} />
+
         <DefaultLayout
           exact
-          patch={PATH.PRODUCTLIST}
+          path={PATH.PRODUCTLIST}
           component={ProductListPage}
+        />
+        <DefaultLayout
+          exact
+          path={PATH.PRODUCTDETAIL}
+          component={ProductDetailPage}
         />
       </Switch>
     </Router>
