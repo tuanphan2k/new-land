@@ -1,6 +1,18 @@
 import './style.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { getNewsList } from '../../../redux/news.slice'
+import { useEffect } from 'react'
+import history from '../../../utils/history'
 
 function News() {
+  const dispatch = useDispatch()
+
+  const newsListData = useSelector(state => state.news)
+
+  useEffect(() => {
+    dispatch(getNewsList())
+  }, [])
+
   const newsList = [
     {
       imgUrl:
@@ -82,13 +94,20 @@ function News() {
   ]
 
   function renderNewList() {
-    return newsList.map((item, index) => {
+    return newsListData?.data?.map(item => {
       return (
-        <li key={index} className="item-card">
-          <img src={`${item.imgUrl}`} alt="" className="item-image" />
+        <li
+          key={item.id}
+          className="item-card"
+          onClick={() => history.pushState(`news/${item.id}`)}
+        >
+          <img src={item.image} alt="" className="item-image" />
           <div className="item-text">
-            <h4 className="tag-title">{item.type}</h4>
-            <p>{item.content}</p>
+            <h4 className="tag-title">{item.title}</h4>
+            <p>{item.description}</p>
+            <p className="tag-name">
+              Dự án: <span>{item.name_product}</span>
+            </p>
           </div>
         </li>
       )
@@ -117,7 +136,7 @@ function News() {
   }
 
   return (
-    <div className="news__info">
+    <div className="news__info container-1">
       <div className="news__info-content">
         <h1 className="heading-title">Tin tức</h1>
         <div className="card">

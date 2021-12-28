@@ -49,6 +49,15 @@ function SidebarAdmin({ isSeller }) {
                 >
                   Quản lý bất động sản
                 </Menu.Item>
+                <Menu.Item
+                  key="3"
+                  icon={<AppstoreOutlined />}
+                  onClick={() => {
+                    history.push(PATH.NEWSLIST)
+                  }}
+                >
+                  Quản lý bài viết
+                </Menu.Item>
               </>
             ) : (
               <>

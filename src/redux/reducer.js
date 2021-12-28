@@ -4,6 +4,7 @@ import userReducer from './user.slice'
 import employeeReducer from './employee.slice'
 import productReducer from './product.slice'
 import productDetailReducer from './productDetail.slice'
+import newsReducer from './news.slice'
 
 const rootReducer = {
   auth: authReducer,
@@ -11,7 +12,8 @@ const rootReducer = {
   user: userReducer,
   employee: employeeReducer,
   product: productReducer,
-  productDetail: productDetailReducer
+  productDetail: productDetailReducer,
+  news: newsReducer
 }
 
 export default rootReducer

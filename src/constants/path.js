@@ -16,7 +16,12 @@ const PATH = {
   SELLER: '/seller',
   EMPLOYEE: '/seller/employee',
   POSTPRODUCT: '/post-product',
-  PRODUCT: '/seller/product'
+  PRODUCT: '/seller/product',
+  NEWS: '/post-news',
+  NEWSLIST: '/seller/news',
+  NEWSUPDATE: '/post-news/:id',
+  NEWSUSERLIST: '/news',
+  NEWSUSERDETAIL: '/news/:id'
 }
 
 export default PATH

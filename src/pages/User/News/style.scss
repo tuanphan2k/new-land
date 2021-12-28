@@ -1,16 +1,15 @@
 .news__info {
   width: 100%;
   display: flex;
-  margin-top: 20px;
-  
+  margin-top: 34px;
+
   &-content {
     flex: 0 0 calc(100% - 360px);
-    padding: 0 15px;
+    // padding: 0 15px;
 
     .card {
       .list-cart {
         .item-card {
-          
           display: flex;
           margin-top: 20px;
           .item-image {
@@ -23,6 +22,9 @@
             border: 1px solid #f0f2f6;
           }
           .item-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
             .tag-title {
               font-weight: bold;
               font-size: 18px;
@@ -30,6 +32,11 @@
               color: #333333;
               margin-bottom: 10px;
               display: block;
+            }
+            .tag-name {
+              span {
+                font-weight: 500;
+              }
             }
             p {
               font-weight: normal;

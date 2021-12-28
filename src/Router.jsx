@@ -9,6 +9,7 @@ import SellerLayout from './layouts/SellerLayout'
 import UserHomePage from './pages/User/HomePage'
 import ProductListPage from './pages/User/ProductList'
 import ProductDetailPage from './pages/User/ProductDetail'
+import NewsUerList from './pages/User/News'
 //auth-pages
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
@@ -20,6 +21,8 @@ import AdminDashboard from './pages/Admin/Dashboard'
 import SellerEmployee from './pages/Seller/Employee'
 import PostProduct from './pages/Seller/PostProduct'
 import ProducPage from './pages/Seller/Product'
+import NewsPage from './pages/Seller/News'
+import NewsListPage from './pages/Seller/News/NewsList'
 
 function BrowserRouter() {
   return (
@@ -37,6 +40,10 @@ function BrowserRouter() {
         <PrivateLayout exact path={PATH.ADMIN} component={AdminDashboard} />
         <SellerLayout exact path={PATH.EMPLOYEE} component={SellerEmployee} />
         <SellerLayout exact path={PATH.PRODUCT} component={ProducPage} />
+        <SellerLayout exact path={PATH.NEWSLIST} component={NewsListPage} />
+
+        <DefaultLayout exact path={PATH.NEWS} component={NewsPage} />
+        <DefaultLayout exact path={PATH.NEWSUSERLIST} component={NewsUerList} />
         <DefaultLayout exact path={PATH.POSTPRODUCT} component={PostProduct} />
 
         <DefaultLayout
@@ -49,6 +56,7 @@ function BrowserRouter() {
           path={PATH.PRODUCTDETAIL}
           component={ProductDetailPage}
         />
+        <DefaultLayout exact path={PATH.NEWSUPDATE} component={NewsPage} />
       </Switch>
     </Router>
   )

@@ -77,6 +77,17 @@ function Header() {
     </Menu>
   )
 
+  const menuPost = (
+    <Menu>
+      <Menu.Item key="1" onClick={() => history.push('/post-product')}>
+        Đăng bán Bất động sản
+      </Menu.Item>
+      <Menu.Item key="1" onClick={() => history.push('/post-news')}>
+        Đăng tin
+      </Menu.Item>
+    </Menu>
+  )
+
   return (
     <>
       <header className="header">
@@ -113,9 +124,9 @@ function Header() {
             </li>
             {userInfo?.account_type === 2 ? (
               <li className="toolbox__item">
-                <BorderOuterOutlined
-                  onClick={() => history.push('/post-product')}
-                />
+                <Dropdown overlay={menuPost} onClick={e => e.preventDefault()}>
+                  <BorderOuterOutlined />
+                </Dropdown>
               </li>
             ) : (
               ''

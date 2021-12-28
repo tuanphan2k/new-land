@@ -1,0 +1,22 @@
+@import '../../../style/styles.scss';
+
+.post-news {
+  margin: 30px auto;
+
+  &__form {
+    &--content {
+      padding: 60px;
+      margin: 20px;
+      border-radius: 12px;
+      background-color: $bg-gray;
+
+      h2 {
+        text-align: center;
+      }
+    }
+  }
+
+  &__btn {
+    margin: 34px 0;
+  }
+}
