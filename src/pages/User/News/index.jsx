@@ -99,7 +99,7 @@ function News() {
         <li
           key={item.id}
           className="item-card"
-          onClick={() => history.pushState(`news/${item.id}`)}
+          onClick={() => history.push(`news/${item.id}`)}
         >
           <img src={item.image} alt="" className="item-image" />
           <div className="item-text">
