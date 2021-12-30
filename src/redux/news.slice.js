@@ -50,7 +50,7 @@ export const deleteNews = createAsyncThunk(
 )
 
 export const getNewsListByUserID = createAsyncThunk(
-  'news/getList',
+  'news/getListId',
   async (params, thunkAPI) => {
     try {
       const response = await newsApi.getNewsListByUserID(params)

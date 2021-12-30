@@ -1,5 +1,6 @@
 import './style.scss'
-import { Row, Col } from 'antd'
+import { Row, Col, Button } from 'antd'
+import { PhoneOutlined, HeartOutlined } from '@ant-design/icons'
 function ProductInfo({ detail, infoDetail }) {
   const {
     id,
@@ -17,10 +18,6 @@ function ProductInfo({ detail, infoDetail }) {
   } = detail
 
   const { imageList, infoList } = infoDetail || {}
-
-  console.log(price)
-
-  console.log(infoList)
 
   function sliceAdress(address) {
     return address?.split('-')[1]
@@ -68,7 +65,7 @@ function ProductInfo({ detail, infoDetail }) {
           <div className="basic-info">
             <Row justify="space-between">
               <h1 className="page-title">{name}</h1>
-              <h1>{price} vnđ</h1>
+              <h2>{parseInt(price).toLocaleString('it-IT')} vnđ</h2>
             </Row>
             <div className="address">
               <p className="location" style={{ fontSize: '1.6rem' }}>
@@ -77,7 +74,23 @@ function ProductInfo({ detail, infoDetail }) {
                 )} - ${sliceAdress(city)}`}
               </p>
             </div>
-            <h4 className="tab-title">Thông tin mô tả</h4>
+            <Row justify="space-between">
+              <Col>
+                <h4 className="tab-title">Thông tin mô tả</h4>
+              </Col>
+              <Col>
+                <Row>
+                  <Button size="large" type="primary" icon={<PhoneOutlined />}>
+                    Liên hệ đặt cọc
+                  </Button>
+                  <Button
+                    style={{ marginLeft: '20px' }}
+                    size="large"
+                    icon={<HeartOutlined />}
+                  ></Button>
+                </Row>
+              </Col>
+            </Row>
             <div className="wrap-description" style={{ fontSize: '1.8rem' }}>
               <div className="description">{description}</div>
             </div>

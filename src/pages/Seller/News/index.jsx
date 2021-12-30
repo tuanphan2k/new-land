@@ -169,7 +169,7 @@ function NewsPage() {
     if (newsId) {
       async function fetchNewsDetail() {
         const res = await dispatch(getNewsDetail(newsId))
-        setData(res.payload)
+        setData(res.payload[0])
       }
       fetchNewsDetail()
     }
