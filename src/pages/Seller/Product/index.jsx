@@ -8,7 +8,11 @@ import {
   Form,
   Drawer,
   Col,
-  Image
+  Image,
+  Modal,
+  Select,
+  InputNumber,
+  Spin
 } from 'antd'
 import {
   EditOutlined,
@@ -21,7 +25,13 @@ import axios from 'axios'
 import './style.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { deleteProduct, getProductList } from '../../../redux/product.slice'
+import {
+  deleteProduct,
+  getProductList,
+  editProduct
+} from '../../../redux/product.slice'
+import { getProductDetail } from '../../../redux/productDetail.slice'
+import { getEmployeeList } from '../../../redux/employee.slice'
 import {
   getImage,
   getInfo,
@@ -39,15 +49,29 @@ function ProductPage() {
   const [imageUrl, setImageUrl] = useState([])
 
   const [visible, setVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const productDetail = useSelector(state => state.productDetail)
+  const employeeList = useSelector(state => state.employee)
 
+  const { TextArea } = Input
   useEffect(() => {
     dispatch(getProductList({ tokens: userInfo.token, user_id: userInfo.id }))
+    dispatch(
+      getEmployeeList({
+        tokens: userInfo.token,
+        user_id: userInfo.id
+      })
+    )
   }, [])
 
   const { Search } = Input
-  const [infoForm] = Form.useForm()
+  const [detailForm] = Form.useForm()
   useEffect(() => {
-    infoForm.resetFields()
+    async function resetData() {
+      await dispatch(getProductDetail(productSeleted?.id))
+      await detailForm.resetFields()
+    }
+    resetData()
   }, [productSeleted.id])
 
   async function handleAddInfo(id) {
@@ -105,16 +129,10 @@ function ProductPage() {
           <Row justify="space-between">
             <EditOutlined
               className="table-icon icon-primary"
-              // onClick={() => {
-              //   setIsAddCategory(false)
-              //   setIsModalVisible(true)
-              //   setcategoryDetail({
-              //     img: record.image,
-              //     name: record.name,
-              //     id: record.id
-              //   })
-              //   setUrlImage(record.img)
-              // }}
+              onClick={() => {
+                setIsModalVisible(true)
+                setProductSeleted({ ...productSeleted, id: record.id })
+              }}
             />
             <BorderInnerOutlined
               className="table-icon icon-primary"
@@ -194,8 +212,236 @@ function ProductPage() {
       })
   }
 
+  function sliceAdress(address) {
+    return address?.split('-')[1]
+  }
+
+  async function handleSubmitEdit() {
+    try {
+      await dispatch(
+        editProduct({
+          tokens: userInfo.token,
+          body: detailForm.getFieldsValue(),
+          id: productSeleted?.id
+        })
+      )
+      notification.success({
+        message: 'Chỉnh sửa thành công'
+      })
+    } catch (err) {
+      notification.warning({
+        message: 'Thêm thất bại'
+      })
+    }
+
+    await dispatch(
+      getProductList({ tokens: userInfo.token, user_id: userInfo.id })
+    )
+    setIsModalVisible(false)
+  }
+
   return (
     <main className="user-page">
+      <Modal
+        title="Chỉnh sửa thông tin bất động sản"
+        visible={isModalVisible}
+        onOk={() => handleSubmitEdit()}
+        onCancel={() => setIsModalVisible(false)}
+        width={900}
+      >
+        {productDetail?.loading ? (
+          <Spin />
+        ) : (
+          <Form
+            name="detailForm"
+            form={detailForm}
+            className="info-form"
+            layout="vertical"
+            initialValues={productDetail?.data}
+          >
+            <h2 className="login-title">Nhập thông tin địa chỉ</h2>
+            <Form.Item
+              label="Nhà / căn hộ của bạn thuộc dự án nào"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập vào tên dự án!'
+                }
+              ]}
+            >
+              <Input placeholder="Tên dự án" />
+            </Form.Item>
+            <Row gutter={46}>
+              <Col span={12}>
+                <Form.Item
+                  label="Tỉnh/ Thành phố"
+                  name="city"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng chọn Tỉnh / Thành phố!'
+                    }
+                  ]}
+                >
+                  <Select disabled placeholder="Chọn Tỉnh / Thành phố">
+                    {productDetail?.city?.map(item => (
+                      <Select.Option key={item} value={item}>
+                        {sliceAdress(item.name)}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Quận / Huyện"
+                  name="district"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng chọn Quận / Huyện!'
+                    }
+                  ]}
+                >
+                  <Select disabled placeholder="Chọn Tỉnh / Thành phố">
+                    {productDetail?.district?.map(item => (
+                      <Select.Option key={item} value={item}>
+                        {sliceAdress(item.name)}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={46}>
+              <Col span={12}>
+                <Form.Item
+                  label="Phường / Xã"
+                  name="ward"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng chọn Phường / Xã!'
+                    }
+                  ]}
+                >
+                  <Select disabled placeholder="Chọn Tỉnh / Thành phố">
+                    {productDetail?.ward?.map(item => (
+                      <Select.Option key={item} value={item}>
+                        {sliceAdress(item.name)}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Nhân viên bán"
+                  name="employees"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng chọn nhân viên!'
+                    }
+                  ]}
+                >
+                  <Select style={{ width: 400 }} placeholder="Chọn nhân viên">
+                    {employeeList?.data?.map(item => (
+                      <Select.Option key={item.id} value={item.id}>
+                        {item.full_name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={46}>
+              <Col span={12}>
+                <Form.Item
+                  label="Giá bán mong muốn"
+                  name="price"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập vào giá bán!'
+                    }
+                  ]}
+                >
+                  <InputNumber
+                    style={{ width: 300 }}
+                    min="0"
+                    placeholder="Giá mong muốn"
+                    stringMode
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Số tiền cần đặt cọc"
+                  name="deposit_price"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập vào tiền đặt cọc!'
+                    }
+                  ]}
+                >
+                  <InputNumber
+                    style={{ width: 300 }}
+                    min="0"
+                    placeholder="Tiền đặt cọc"
+                    stringMode
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={46}>
+              <Col span={12}>
+                <Form.Item
+                  label="Hạn ngày đặt cọc"
+                  name="deposit_time"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập vào hạn ngày đặt cọc!'
+                    }
+                  ]}
+                >
+                  <InputNumber
+                    style={{ width: 200 }}
+                    min="1"
+                    placeholder="Số lượng"
+                    stringMode
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Số lượng bất động sản"
+                  name="quantity"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập vào số lượng!'
+                    }
+                  ]}
+                >
+                  <InputNumber
+                    style={{ width: 200 }}
+                    min="1"
+                    placeholder="Số lượng"
+                    stringMode
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item label="Mô tả căn nhà của bạn" name="description">
+              <TextArea placeholder="Mô tả" />
+            </Form.Item>
+          </Form>
+        )}
+      </Modal>
       <Drawer
         title="Thêm thông tin chi tiết"
         width="600"
@@ -224,13 +470,7 @@ function ProductPage() {
             </span>
           </Row>
         </div>
-        <Form
-          initialValues={infoForm}
-          form={infoForm}
-          layout="vertical"
-          name="infoForm"
-          onFinish={onFinish}
-        >
+        <Form layout="vertical" name="infoForm" onFinish={onFinish}>
           <Row>
             <h3>Mô tả:</h3>
           </Row>

@@ -36,6 +36,15 @@ const productApi = {
   showProductListLocal: params => {
     const url = `/product/location/${params}`
     return axiosClient.get(url)
+  },
+
+  editProduct: params => {
+    const url = `/product/${params.id}`
+    return axiosClient.patch(url, params.body, {
+      headers: {
+        Authorization: `Bearer ${params.tokens}`
+      }
+    })
   }
 }
 

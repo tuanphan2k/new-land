@@ -61,6 +61,18 @@ export const showProductListLocal = createAsyncThunk(
   }
 )
 
+export const editProduct = createAsyncThunk(
+  'product/edit',
+  async (params, thunkAPI) => {
+    try {
+      const response = await productApi.editProduct(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
 const product = createSlice({
   name: 'product',
   initialState: {
