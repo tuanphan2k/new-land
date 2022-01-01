@@ -47,7 +47,11 @@ const favorite = createSlice({
   extraReducers: {
     [getFavoriteList.fulfilled]: (state, action) => {
       state.loading = false
-      state.data = action.payload
+      if (action.payload?.length > 0) {
+        state.data = action.payload
+      } else {
+        state.data = []
+      }
       state.error = ''
     },
     [getFavoriteList.pending]: state => {

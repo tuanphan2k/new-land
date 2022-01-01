@@ -93,7 +93,7 @@ function Header() {
 
   const menuFavorite = (
     <Menu className="header__menu">
-      {favoriteList?.data.map(item => (
+      {favoriteList?.data?.map(item => (
         <Menu.Item
           key={item.id}
           onClick={() => history.push(`/detail/${item.product_id}`)}

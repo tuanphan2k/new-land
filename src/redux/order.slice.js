@@ -49,8 +49,8 @@ export const getOrderDetail = createAsyncThunk(
   }
 )
 
-const favorite = createSlice({
-  name: 'favorite',
+const order = createSlice({
+  name: 'order',
   initialState: {
     data: [],
     loading: false,
@@ -92,5 +92,5 @@ const favorite = createSlice({
   }
 })
 
-const favoriteReducer = favorite.reducer
-export default favoriteReducer
+const orderReducer = order.reducer
+export default orderReducer

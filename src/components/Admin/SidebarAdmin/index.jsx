@@ -8,7 +8,9 @@ import {
   HomeOutlined,
   LogoutOutlined,
   UsergroupAddOutlined,
-  TeamOutlined
+  TeamOutlined,
+  HighlightOutlined,
+  FundOutlined
 } from '@ant-design/icons'
 import './style.scss'
 
@@ -51,12 +53,21 @@ function SidebarAdmin({ isSeller }) {
                 </Menu.Item>
                 <Menu.Item
                   key="3"
-                  icon={<AppstoreOutlined />}
+                  icon={<HighlightOutlined />}
                   onClick={() => {
                     history.push(PATH.NEWSLIST)
                   }}
                 >
                   Quản lý bài viết
+                </Menu.Item>
+                <Menu.Item
+                  key="4"
+                  icon={<FundOutlined />}
+                  onClick={() => {
+                    history.push(PATH.ORDERMANA)
+                  }}
+                >
+                  Quản lý đặt cọc
                 </Menu.Item>
               </>
             ) : (

@@ -2,6 +2,7 @@ const PATH = {
   PRODUCTLIST: '/product-list/:id',
   PRODUCTDETAIL: '/detail/:id',
   HOME: '/',
+  PROFILE: '/profile',
   //auth
   LOGIN: '/login',
   REGISTER: '/register',
@@ -22,7 +23,8 @@ const PATH = {
   NEWSUPDATE: '/post-news/:id',
   NEWSUSERLIST: '/news',
   NEWSUSERDETAIL: '/news/:id',
-  ORDERPRODUCT: '/order/:id/:idEm'
+  ORDERPRODUCT: '/order/:id/:idEm',
+  ORDERMANA: '/order-mana'
 }
 
 export default PATH

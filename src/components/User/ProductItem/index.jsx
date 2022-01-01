@@ -19,7 +19,8 @@ function ProductItem(props) {
 
   const dispatch = useDispatch()
   const favoriteList = useSelector(state => state.favorite)
-  const hasProduct = favoriteList?.data.findIndex(
+
+  const hasProduct = favoriteList?.data?.findIndex(
     item => item.product_id === id
   )
 

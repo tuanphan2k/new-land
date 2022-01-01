@@ -1,0 +1,30 @@
+@import '/src/style/styles.scss';
+
+.profile-page {
+  &__form {
+    margin-bottom: 54px;
+    padding: 20px;
+    min-height: 80vh;
+    border-radius: 20px;
+    box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .infor__form {
+    padding: 20px;
+  }
+
+  .infor__avatar {
+    &--name {
+      margin: 8px 0 16px;
+      text-align: center;
+      font-size: 1.6rem;
+    }
+  }
+
+  .title {
+    margin-bottom: 26px;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+}

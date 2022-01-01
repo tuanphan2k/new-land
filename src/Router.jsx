@@ -11,6 +11,7 @@ import ProductListPage from './pages/User/ProductList'
 import ProductDetailPage from './pages/User/ProductDetail'
 import NewsUerList from './pages/User/News'
 import OrderProductPage from './pages/User/OrderProduct'
+import ProfilePage from './pages/User/Profile'
 //auth-pages
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
@@ -24,6 +25,7 @@ import PostProduct from './pages/Seller/PostProduct'
 import ProducPage from './pages/Seller/Product'
 import NewsPage from './pages/Seller/News'
 import NewsListPage from './pages/Seller/News/NewsList'
+import OrderManaPage from './pages/Seller/OrderMana'
 
 function BrowserRouter() {
   return (
@@ -63,6 +65,8 @@ function BrowserRouter() {
           path={PATH.ORDERPRODUCT}
           component={OrderProductPage}
         />
+        <DefaultLayout exact path={PATH.PROFILE} component={ProfilePage} />
+        <SellerLayout exact path={PATH.ORDERMANA} component={OrderManaPage} />
       </Switch>
     </Router>
   )
