@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient'
 
-const employeeApi = {
-  getEmployeeList: params => {
-    const url = `/employees/get/${params.user_id}`
+const orderApi = {
+  getOrderList: params => {
+    const url = `/oder/get/${params.user_id}`
     return axiosClient.get(url, {
       headers: {
         Authorization: `Bearer ${params.tokens}`
@@ -10,8 +10,8 @@ const employeeApi = {
     })
   },
 
-  addEmployee: params => {
-    const url = `/employees`
+  addOrder: params => {
+    const url = `/oder`
     return axiosClient.post(url, params.body, {
       headers: {
         Authorization: `Bearer ${params.tokens}`
@@ -19,28 +19,23 @@ const employeeApi = {
     })
   },
 
-  editEmployee: (params, data) => {
-    const url = `/employees/${params.id}`
-    return axiosClient.patch(url, data, {
+  getOrderDetail: params => {
+    const url = `/oder/${params.id}`
+    return axiosClient.get(url, {
       headers: {
         Authorization: `Bearer ${params.tokens}`
       }
     })
   },
 
-  deleteEmployee: params => {
-    const url = `/employees/${params.id}`
+  deleteOrder: params => {
+    const url = `/oder/${params.id}`
     return axiosClient.delete(url, {
       headers: {
         Authorization: `Bearer ${params.tokens}`
       }
     })
-  },
-
-  getEmployeeDetail: id => {
-    const url = `/employees/${id}`
-    return axiosClient.get(url)
   }
 }
 
-export default employeeApi
+export default orderApi

@@ -1,6 +1,13 @@
 import './style.scss'
-import { Row, Col, Button } from 'antd'
-import { PhoneOutlined, HeartOutlined } from '@ant-design/icons'
+import { Row, Col, Button, notification } from 'antd'
+import { PhoneOutlined, HeartOutlined, HeartTwoTone } from '@ant-design/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  addFavorite,
+  getFavoriteList,
+  deleteFavorite
+} from '../../../redux/favorite.slice'
+import history from '../../../utils/history'
 function ProductInfo({ detail, infoDetail }) {
   const {
     id,
@@ -13,8 +20,8 @@ function ProductInfo({ detail, infoDetail }) {
     deposit_time,
     deposit_price,
     name,
-    image,
-    price
+    price,
+    token
   } = detail
 
   const { imageList, infoList } = infoDetail || {}
@@ -22,6 +29,12 @@ function ProductInfo({ detail, infoDetail }) {
   function sliceAdress(address) {
     return address?.split('-')[1]
   }
+
+  const favoriteList = useSelector(state => state.favorite)
+
+  const hasProduct = favoriteList?.data.findIndex(
+    item => item.product_id === id
+  )
 
   const commnues = [
     {
@@ -58,6 +71,40 @@ function ProductInfo({ detail, infoDetail }) {
     }
   ]
 
+  const dispatch = useDispatch()
+
+  async function handleFavorite() {
+    const res = await dispatch(
+      addFavorite({
+        tokens: token,
+        body: {
+          product_id: id
+        }
+      })
+    )
+
+    await notification.success({
+      message: res.payload.msg
+    })
+
+    await dispatch(getFavoriteList({ tokens: token }))
+  }
+
+  async function handleDeleteFavorite() {
+    const res = await dispatch(
+      deleteFavorite({
+        tokens: token,
+        id: favoriteList?.data[hasProduct]?.id
+      })
+    )
+
+    await notification.success({
+      message: res.payload.msg
+    })
+
+    await dispatch(getFavoriteList({ tokens: token }))
+  }
+
   return (
     <div className="" style={{ display: 'block' }}>
       <div className="product-info">
@@ -80,13 +127,31 @@ function ProductInfo({ detail, infoDetail }) {
               </Col>
               <Col>
                 <Row>
-                  <Button size="large" type="primary" icon={<PhoneOutlined />}>
+                  <Button
+                    size="large"
+                    type="primary"
+                    icon={<PhoneOutlined />}
+                    onClick={() => history.push(`/order/${id}/${employees}`)}
+                  >
                     Liên hệ đặt cọc
                   </Button>
                   <Button
                     style={{ marginLeft: '20px' }}
                     size="large"
-                    icon={<HeartOutlined />}
+                    onClick={() => {
+                      if (hasProduct === -1) {
+                        return handleFavorite()
+                      }
+
+                      return handleDeleteFavorite()
+                    }}
+                    icon={
+                      hasProduct === -1 ? (
+                        <HeartOutlined />
+                      ) : (
+                        <HeartTwoTone twoToneColor="#eb2f96" />
+                      )
+                    }
                   ></Button>
                 </Row>
               </Col>
@@ -98,6 +163,18 @@ function ProductInfo({ detail, infoDetail }) {
             <div className="block-properties">
               <div className="properties">
                 <ul className="list-properties">
+                  <Row gutter={48}>
+                    <Col span={4}>
+                      <li className="properties-item" key="cbd">
+                        Số lượng:
+                      </li>
+                    </Col>
+                    <Col span={20}>
+                      <li className="properties-item" key="acs">
+                        {quantity}
+                      </li>
+                    </Col>
+                  </Row>
                   {infoList?.map((item, index) => (
                     <Row gutter={48}>
                       <Col span={4}>

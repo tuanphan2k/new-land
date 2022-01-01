@@ -10,6 +10,7 @@ import UserHomePage from './pages/User/HomePage'
 import ProductListPage from './pages/User/ProductList'
 import ProductDetailPage from './pages/User/ProductDetail'
 import NewsUerList from './pages/User/News'
+import OrderProductPage from './pages/User/OrderProduct'
 //auth-pages
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
@@ -57,6 +58,11 @@ function BrowserRouter() {
           component={ProductDetailPage}
         />
         <DefaultLayout exact path={PATH.NEWSUPDATE} component={NewsPage} />
+        <DefaultLayout
+          exact
+          path={PATH.ORDERPRODUCT}
+          component={OrderProductPage}
+        />
       </Switch>
     </Router>
   )

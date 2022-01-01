@@ -64,4 +64,11 @@
   &__search {
     max-width: 500px;
   }
+
+  &__menu {
+    &--item-content {
+      font-size: 1.8rem;
+      padding-right: 16px;
+    }
+  }
 }

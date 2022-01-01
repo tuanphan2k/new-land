@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Row, Input, Menu, Dropdown, notification, Spin } from 'antd'
+import { Row, Input, Menu, Col, Dropdown, notification, Spin } from 'antd'
 import history from '../../../utils/history'
 import {
   SearchOutlined,
@@ -12,6 +12,7 @@ import {
 } from '@ant-design/icons'
 import Logo from '../../../assets/logos/logo.png'
 import { getCategoryList } from '../../../redux/category.slice'
+import { getFavoriteList } from '../../../redux/favorite.slice'
 import './style.scss'
 
 function Header() {
@@ -21,11 +22,13 @@ function Header() {
   const { Search } = Input
 
   const categoryList = useSelector(state => state.category)
+  const favoriteList = useSelector(state => state.favorite)
 
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
   useEffect(() => {
     dispatch(getCategoryList({}))
+    dispatch(getFavoriteList({ tokens: userInfo.token }))
   }, [dispatch])
 
   function renderCategory() {
@@ -88,6 +91,29 @@ function Header() {
     </Menu>
   )
 
+  const menuFavorite = (
+    <Menu className="header__menu">
+      {favoriteList?.data.map(item => (
+        <Menu.Item
+          key={item.id}
+          onClick={() => history.push(`/detail/${item.product_id}`)}
+        >
+          <Row
+            justify="space-between"
+            gutter={8}
+            className="header__menu--item-content"
+          >
+            <Col span={4}></Col>
+            <Col span={16}>
+              <div>hahasdfsdfsdfsdfsdfsa</div>
+            </Col>
+            <Col span={4}></Col>
+          </Row>
+        </Menu.Item>
+      ))}
+    </Menu>
+  )
+
   return (
     <>
       <header className="header">
@@ -119,8 +145,17 @@ function Header() {
               )}
             </li>
             <li className="toolbox__item">
-              <HeartOutlined />
-              <span className="toolbox__item--number">1</span>
+              <Dropdown
+                overlay={menuFavorite}
+                onClick={e => e.preventDefault()}
+              >
+                <div>
+                  <HeartOutlined />
+                  <span className="toolbox__item--number">
+                    {favoriteList?.data.length}
+                  </span>
+                </div>
+              </Dropdown>
             </li>
             {userInfo?.account_type === 2 ? (
               <li className="toolbox__item">

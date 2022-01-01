@@ -21,7 +21,8 @@ const PATH = {
   NEWSLIST: '/seller/news',
   NEWSUPDATE: '/post-news/:id',
   NEWSUSERLIST: '/news',
-  NEWSUSERDETAIL: '/news/:id'
+  NEWSUSERDETAIL: '/news/:id',
+  ORDERPRODUCT: '/order/:id/:idEm'
 }
 
 export default PATH

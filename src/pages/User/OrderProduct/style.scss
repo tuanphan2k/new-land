@@ -1,0 +1,55 @@
+@import '/src/style/styles.scss';
+
+.order {
+  min-height: 80vh;
+  padding-top: 24px;
+
+  &__form {
+    border-radius: 12px;
+    border: 1px solid $text-gray;
+    background-color: $bg-gray;
+    padding: 16px;
+
+    &--content {
+      font-size: 1.6rem;
+      width: 400px;
+
+      h2 {
+        margin-top: 6px;
+        text-align: center;
+      }
+
+      .price {
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__product {
+    border-radius: 12px;
+    border: 1px solid $text-gray;
+    background-color: $bg-gray;
+    padding: 16px;
+
+    &--img {
+      display: block;
+      width: 200px;
+    }
+
+    &--content {
+      h2 {
+        text-align: center;
+        margin: 6px 0;
+      }
+
+      p {
+        font-size: 1.6rem;
+      }
+
+      .price {
+        color: $red-color;
+        font-size: 1.8rem;
+      }
+    }
+  }
+}

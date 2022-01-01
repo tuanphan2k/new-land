@@ -21,6 +21,8 @@ function ProductList() {
     item => item.id === categoryId
   )
 
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+
   const [priceSelected, setPriceSelected] = useState(null)
 
   useEffect(() => {
@@ -69,7 +71,7 @@ function ProductList() {
             {productList?.data &&
               productList?.data.map(item => (
                 <Col span={6} key={item.id}>
-                  <ProductItem product={item} />
+                  <ProductItem product={{ ...item, token: userInfo.token }} />
                 </Col>
               ))}
           </Row>

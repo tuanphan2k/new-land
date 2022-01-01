@@ -17,6 +17,7 @@ function ProductDetail() {
   const { pathname } = useLocation()
   const productId = parseInt(pathname.split('/')[2])
   const [infoDetail, setInfoDetail] = useState()
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
   useEffect(() => {
     dispatch(getProductDetail(productId))
@@ -60,7 +61,11 @@ function ProductDetail() {
             })}
           </Carousel>
         </div>
-        <ProductInfo detail={productDetail.data} infoDetail={infoDetail} />
+        <ProductInfo
+          key={productDetail.id}
+          detail={{ ...productDetail.data, token: userInfo.token }}
+          infoDetail={infoDetail}
+        />
       </section>
     </div>
   )

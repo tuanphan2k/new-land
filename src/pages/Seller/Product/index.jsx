@@ -30,13 +30,13 @@ import {
   getProductList,
   editProduct
 } from '../../../redux/product.slice'
-import { getProductDetail } from '../../../redux/productDetail.slice'
 import { getEmployeeList } from '../../../redux/employee.slice'
 import {
   getImage,
   getInfo,
   addImage,
-  addInfo
+  addInfo,
+  getProductDetail
 } from '../../../redux/productDetail.slice'
 import history from '../../../utils/history'
 

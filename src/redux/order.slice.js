@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import employeeApi from '../API/emplyeeApi'
+import orderApi from '../API/orderApi'
 
-export const getEmployeeList = createAsyncThunk(
-  'employee/getList',
+export const getOrderList = createAsyncThunk(
+  'order/getList',
   async (params, thunkAPI) => {
     try {
-      const response = await employeeApi.getEmployeeList(params)
+      const response = await orderApi.getOrderList(params)
       return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -13,11 +13,11 @@ export const getEmployeeList = createAsyncThunk(
   }
 )
 
-export const addEmployee = createAsyncThunk(
-  'employee/addEmployee',
+export const addOrder = createAsyncThunk(
+  'order/addOrder',
   async (params, thunkAPI) => {
     try {
-      const response = await employeeApi.addEmployee(params)
+      const response = await orderApi.addOrder(params)
       return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -25,11 +25,11 @@ export const addEmployee = createAsyncThunk(
   }
 )
 
-export const deleteEmployee = createAsyncThunk(
-  'employee/deleteEmployee',
+export const deleteOrder = createAsyncThunk(
+  'order/deleteOrder',
   async (params, thunkAPI) => {
     try {
-      const response = await employeeApi.deleteEmployee(params)
+      const response = await orderApi.deleteOrder(params)
       return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -37,11 +37,11 @@ export const deleteEmployee = createAsyncThunk(
   }
 )
 
-export const getEmployeeDetail = createAsyncThunk(
-  'employee/getEmployeeDetail',
+export const getOrderDetail = createAsyncThunk(
+  'order/getOrderDetail',
   async (params, thunkAPI) => {
     try {
-      const response = await employeeApi.getEmployeeDetail(params)
+      const response = await orderApi.getOrderDetail(params)
       return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -49,48 +49,48 @@ export const getEmployeeDetail = createAsyncThunk(
   }
 )
 
-const employee = createSlice({
-  name: 'employee',
+const favorite = createSlice({
+  name: 'favorite',
   initialState: {
     data: [],
     loading: false,
     error: ''
   },
   extraReducers: {
-    [getEmployeeList.fulfilled]: (state, action) => {
+    [getOrderList.fulfilled]: (state, action) => {
       state.loading = false
       state.data = action.payload
       state.error = ''
     },
-    [getEmployeeList.pending]: state => {
+    [getOrderList.pending]: state => {
       state.loading = true
     },
-    [getEmployeeList.rejected]: (state, action) => {
+    [getOrderList.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     },
-    [addEmployee.fulfilled]: (state, action) => {
+    [addOrder.fulfilled]: (state, action) => {
       state.loading = false
     },
-    [addEmployee.pending]: state => {
+    [addOrder.pending]: (state, action) => {
       state.loading = true
     },
-    [addEmployee.rejected]: (state, action) => {
+    [addOrder.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     },
-    [deleteEmployee.fulfilled]: (state, action) => {
+    [deleteOrder.fulfilled]: (state, action) => {
       state.loading = false
     },
-    [deleteEmployee.pending]: state => {
+    [deleteOrder.pending]: state => {
       state.loading = true
     },
-    [deleteEmployee.rejected]: (state, action) => {
+    [deleteOrder.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     }
   }
 })
 
-const employeeReducer = employee.reducer
-export default employeeReducer
+const favoriteReducer = favorite.reducer
+export default favoriteReducer
