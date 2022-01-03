@@ -103,11 +103,20 @@ function Header() {
             gutter={8}
             className="header__menu--item-content"
           >
-            <Col span={4}></Col>
-            <Col span={16}>
-              <div>hahasdfsdfsdfsdfsdfsa</div>
+            <Col span={4}>
+              <img
+                style={{ display: 'block' }}
+                width={50}
+                src={item.image}
+                alt=""
+              />
             </Col>
-            <Col span={4}></Col>
+            <Col span={2}></Col>
+            <Col span={18}>
+              <Row style={{ height: '100%' }} justify="center" align="middle">
+                <div>{item.name_product}</div>
+              </Row>
+            </Col>
           </Row>
         </Menu.Item>
       ))}

@@ -58,8 +58,12 @@ const order = createSlice({
   },
   extraReducers: {
     [getOrderList.fulfilled]: (state, action) => {
+      if (action.payload?.length > 0) {
+        state.data = action.payload
+      } else {
+        state.data = []
+      }
       state.loading = false
-      state.data = action.payload
       state.error = ''
     },
     [getOrderList.pending]: state => {

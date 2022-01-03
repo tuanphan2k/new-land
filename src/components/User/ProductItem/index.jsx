@@ -97,7 +97,9 @@ function ProductItem(props) {
         </Row>
         <Row justify="space-between">
           <span className="product-item__comment">Dự án</span>
-          <p className="product-item__content--price">{`${price}vnđ`}</p>
+          <p className="product-item__content--price">{`${parseInt(
+            price
+          ).toLocaleString('it-IT')} vnđ`}</p>
         </Row>
       </div>
     </div>

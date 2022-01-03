@@ -27,7 +27,7 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(showProductList(categoryId))
-  }, [])
+  }, [categoryId])
 
   function renderPriceFilter() {
     return filterPrices.map((item, index) => (
