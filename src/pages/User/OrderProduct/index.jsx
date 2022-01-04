@@ -1,4 +1,4 @@
-import { Row, Col, Image, Button, Avatar, notification } from 'antd'
+import { Row, Col, Image, Button, Avatar, notification, Modal } from 'antd'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +6,7 @@ import Loading from '../../../components/User/Loading'
 import { getProductDetail } from '../../../redux/productDetail.slice'
 import { getEmployeeDetail } from '../../../redux/employee.slice'
 import { addOrder } from '../../../redux/order.slice'
+import history from '../../../utils/history'
 import './style.scss'
 
 function OrderProduct() {
@@ -16,6 +17,7 @@ function OrderProduct() {
   const productDetail = useSelector(state => state.productDetail)
   const [employee, setEmployee] = useState()
   const dispatch = useDispatch()
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -30,20 +32,34 @@ function OrderProduct() {
     return address?.split('-')[1]
   }
 
-  async function handleSubmitOrder() {
+  if (!employee?.id) {
+    return <Loading />
+  }
+
+  async function handleSubmitModal() {
     const res = await dispatch(
       addOrder({ body: { product_id: productId }, tokens: userInfo.token })
     )
     await notification.success({ message: res.payload.msg })
-  }
 
-  if (!employee?.id) {
-    return <Loading />
+    setIsModalVisible(false)
+
+    history.push('/profile')
   }
 
   return (
     <div className="order container-1">
       <Row gutter={36}>
+        <Modal
+          title="Xác nhận đặt cọc"
+          visible={isModalVisible}
+          onOk={() => handleSubmitModal()}
+          onCancel={() => setIsModalVisible(false)}
+          okText="Xác nhận"
+          cancelText="Huỷ"
+        >
+          <p>Bạn phải gửi mã hoá đơn trong hai ngày!</p>
+        </Modal>
         <Col span={15} className="order__form">
           <Row justify="center" align="middle">
             <div className="order__form--content">
@@ -76,9 +92,9 @@ function OrderProduct() {
                 <Button
                   type="primary"
                   size="large"
-                  onClick={() => handleSubmitOrder()}
+                  onClick={() => setIsModalVisible(true)}
                 >
-                  Hoàn tất
+                  Đặt cọc
                 </Button>
               </Row>
             </div>

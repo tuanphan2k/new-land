@@ -1,5 +1,15 @@
 import './style.scss'
-import { Row, Col, Button, notification } from 'antd'
+import {
+  Row,
+  Col,
+  Button,
+  notification,
+  Form,
+  Input,
+  Comment,
+  Avatar,
+  Popconfirm
+} from 'antd'
 import { PhoneOutlined, HeartOutlined, HeartTwoTone } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -7,8 +17,16 @@ import {
   getFavoriteList,
   deleteFavorite
 } from '../../../redux/favorite.slice'
+import {
+  getCommentList,
+  addComment,
+  deleteComment
+} from '../../../redux/comment.slice'
 import history from '../../../utils/history'
+import { useEffect } from 'react'
 function ProductInfo({ detail, infoDetail }) {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+
   const {
     id,
     city,
@@ -31,10 +49,13 @@ function ProductInfo({ detail, infoDetail }) {
   }
 
   const favoriteList = useSelector(state => state.favorite)
-
+  const commentList = useSelector(state => state.comment)
+  console.log(commentList)
   const hasProduct = favoriteList?.data?.findIndex(
     item => item.product_id === id
   )
+
+  const [commentForm] = Form.useForm()
 
   const commnues = [
     {
@@ -73,6 +94,10 @@ function ProductInfo({ detail, infoDetail }) {
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(getCommentList(id))
+  }, [id])
+
   async function handleFavorite() {
     const res = await dispatch(
       addFavorite({
@@ -103,6 +128,28 @@ function ProductInfo({ detail, infoDetail }) {
     })
 
     await dispatch(getFavoriteList({ tokens: token }))
+  }
+
+  async function handleSubmit() {
+    const value = commentForm.getFieldValue()
+    const res = await dispatch(
+      addComment({ tokens: userInfo.token, body: { product_id: id, ...value } })
+    )
+    notification.success({ message: res.payload.msg })
+    await commentForm.resetFields()
+    await dispatch(getCommentList(id))
+  }
+
+  async function handleDeleteComment(comemntId) {
+    const res = await dispatch(
+      deleteComment({
+        tokens: userInfo.token,
+        id: comemntId
+      })
+    )
+
+    notification.success({ message: res.payload.msg })
+    await dispatch(getCommentList(id))
   }
 
   return (
@@ -191,6 +238,79 @@ function ProductInfo({ detail, infoDetail }) {
                   ))}
                 </ul>
               </div>
+            </div>
+            <h4 className="tab-title">Bình luận</h4>
+            <div className="detail-comment">
+              <p>Bạn nghĩ gì về bất động sản này ?</p>
+              <div>
+                <Form form={commentForm} name="commentForm">
+                  <Row style={{ height: '100%' }}>
+                    <Col span={14}>
+                      <Form.Item
+                        name="body"
+                        rules={[
+                          { required: true, message: 'Nhập vào bình luận!' }
+                        ]}
+                      >
+                        <Input.TextArea placeholder="Viết đánh giá của bạn" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={4}>
+                      <Row align="middle" justify="center">
+                        <div>
+                          <Form.Item>
+                            <Button
+                              type="primary"
+                              style={{ height: '50px' }}
+                              htmlType="submit"
+                              onClick={() => handleSubmit()}
+                            >
+                              Viết đánh giá
+                            </Button>
+                          </Form.Item>
+                        </div>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Form>
+              </div>
+              <p>Những bình luận</p>
+              <Row>
+                <Col span={20}>
+                  {commentList?.data?.map(item => (
+                    <Row>
+                      <Col span={20}>
+                        <Comment
+                          author={<a>{item.user_name}</a>}
+                          avatar={
+                            <Avatar
+                              src="https://joeschmoe.io/api/v1/random"
+                              alt="Han Solo"
+                            />
+                          }
+                          content={<p>{item.body}</p>}
+                          datetime={item.created_at}
+                        />
+                      </Col>
+                      <Col span={4}>
+                        {userInfo?.id == item.user_id ? (
+                          <Popconfirm
+                            title="Bạn muốn xoá bình luận này?"
+                            onConfirm={() => handleDeleteComment(item.id)}
+                            // onCancel={cancel}
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                            <a href="#">Xoá</a>
+                          </Popconfirm>
+                        ) : (
+                          ''
+                        )}
+                      </Col>
+                    </Row>
+                  ))}
+                </Col>
+              </Row>
             </div>
           </div>
         </div>

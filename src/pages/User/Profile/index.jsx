@@ -8,7 +8,9 @@ import {
   Avatar,
   notification,
   Table,
-  Popconfirm
+  Popconfirm,
+  Drawer,
+  Spin
 } from 'antd'
 import {
   UserOutlined,
@@ -19,8 +21,13 @@ import {
 } from '@ant-design/icons'
 import { REGEX } from '../../../constants/validate'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getOrderList, deleteOrder } from '../../../redux/order.slice'
+import { useEffect, useState } from 'react'
+import {
+  getOrderList,
+  deleteOrder,
+  getOrderDetail,
+  addBillPayment
+} from '../../../redux/order.slice'
 import './style.scss'
 
 function Profile() {
@@ -29,6 +36,8 @@ function Profile() {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
   const orderList = useSelector(state => state.order)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [orderSelected, setOrderSelected] = useState()
 
   useEffect(() => {
     dispatch(getOrderList({ tokens: userInfo.token, user_id: userInfo.id }))
@@ -51,13 +60,13 @@ function Profile() {
       dataIndex: 'image',
       key: 'image',
       render: (_, record) => {
-        return <img width={100} src={record.img} alt="" />
+        return <img width={100} src={record.image} alt="" />
       }
     },
     {
       title: 'Tên BĐS',
-      dataIndex: 'name',
-      key: 'name'
+      dataIndex: 'name_product',
+      key: 'name_product'
     },
     {
       title: 'Thời gian hết hạn',
@@ -79,7 +88,10 @@ function Profile() {
       render: (_, record) => {
         return (
           <Row justify="space-between">
-            <EditOutlined className="table-icon icon-primary" />
+            <EditOutlined
+              className="table-icon icon-primary"
+              onClick={() => handleShowOrder(record.id)}
+            />
             <Popconfirm
               title={`Bạn các chắc huỷ đặt cọc này ?`}
               onConfirm={() => handleDeleteOrder(record.id)}
@@ -100,10 +112,67 @@ function Profile() {
     )
   }
 
+  async function handleSubmitCode(values) {
+    setIsModalVisible(false)
+    let formData = new FormData()
+    formData.append('code_bill_oder', values.code_bill_oder)
+    const res = await dispatch(
+      addBillPayment({
+        tokens: userInfo.token,
+        id: orderSelected?.id,
+        body: formData
+      })
+    )
+
+    await notification.success({ message: res.payload.msg })
+  }
+
+  async function handleShowOrder(id) {
+    const res = await dispatch(getOrderDetail({ tokens: userInfo.token, id }))
+    await setOrderSelected(res.payload)
+    setIsModalVisible(true)
+  }
+
   return (
     <main className="container-1 profile-page">
+      <Drawer
+        title="Gửi hoá đơn đặt cọc"
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        width={400}
+      >
+        {orderSelected?.name_product ? (
+          <Form
+            initialValues={orderSelected}
+            onFinish={values => handleSubmitCode(values)}
+          >
+            <Form.Item
+              name="code_bill_oder"
+              label="Mã hoá đơn"
+              rules={[{ required: true, message: 'Nhập mã hoá đơn!' }]}
+            >
+              <Input
+                disabled={orderSelected?.name_product ? true : false}
+                placeholder="Mã hoá đơn thanh toán"
+              />
+            </Form.Item>
+            <Row justify="center" align="middle">
+              <Button
+                type="primary"
+                size="large"
+                htmlType="submit"
+                disabled={orderSelected?.name_product ? true : false}
+              >
+                Hoàn tất
+              </Button>
+            </Row>
+          </Form>
+        ) : (
+          <Spin />
+        )}
+      </Drawer>
       <div className="profile-page__form">
-        <Tabs tabPosition="left">
+        <Tabs tabPosition="left" defaultActiveKey="3">
           <TabPane
             tab={
               <span>
@@ -231,7 +300,7 @@ function Profile() {
               wrapperCol={{ span: 20 }}
               onFinish={handleChangePassword}
             >
-              <p className="change-pass__form--title title ">Change Password</p>
+              <p className="change-pass__form--title title ">Đổi mật khẩu</p>
               <Form.Item
                 name="password"
                 label="Password"

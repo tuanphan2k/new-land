@@ -26,6 +26,7 @@ import ProducPage from './pages/Seller/Product'
 import NewsPage from './pages/Seller/News'
 import NewsListPage from './pages/Seller/News/NewsList'
 import OrderManaPage from './pages/Seller/OrderMana'
+import DetailNewsPage from './pages/User/NewsDetail'
 
 function BrowserRouter() {
   return (
@@ -66,6 +67,11 @@ function BrowserRouter() {
           component={OrderProductPage}
         />
         <DefaultLayout exact path={PATH.PROFILE} component={ProfilePage} />
+        <DefaultLayout
+          exact
+          path={PATH.NEWSDETAIL}
+          component={DetailNewsPage}
+        />
         <SellerLayout exact path={PATH.ORDERMANA} component={OrderManaPage} />
       </Switch>
     </Router>

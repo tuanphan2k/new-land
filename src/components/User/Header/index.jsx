@@ -142,7 +142,14 @@ function Header() {
               enterButton
             />
           ) : (
-            <ul className="header__category">{renderCategory()}</ul>
+            <ul className="header__category">
+              {renderCategory()}
+              {
+                <li key="anx" onClick={() => history.push(`/news`)}>
+                  Tin tức
+                </li>
+              }
+            </ul>
           )}
 
           <ul className="header__toolbox">

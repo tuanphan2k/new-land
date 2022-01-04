@@ -8,6 +8,7 @@ import newsReducer from './news.slice'
 import favoriteReducer from './favorite.slice'
 import orderReducer from './order.slice'
 import orderManaReducer from './orderMana.slice'
+import commentReducer from './comment.slice'
 
 const rootReducer = {
   auth: authReducer,
@@ -19,7 +20,8 @@ const rootReducer = {
   news: newsReducer,
   favorite: favoriteReducer,
   order: orderReducer,
-  orderMana: orderManaReducer
+  orderMana: orderManaReducer,
+  comment: commentReducer
 }
 
 export default rootReducer

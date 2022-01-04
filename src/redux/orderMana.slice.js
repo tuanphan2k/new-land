@@ -25,6 +25,42 @@ export const deleteOrderMana = createAsyncThunk(
   }
 )
 
+export const addBillPaymentMana = createAsyncThunk(
+  'order-mana/addBillPayment',
+  async (params, thunkAPI) => {
+    try {
+      const response = await orderManaApi.addBillPayment(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
+export const getOrderDetailMana = createAsyncThunk(
+  'order-mana/getOrderDetailMana',
+  async (params, thunkAPI) => {
+    try {
+      const response = await orderManaApi.getOrderDetailMana(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
+export const orderManaConfirm = createAsyncThunk(
+  'order-mana/orderManaConfirm',
+  async (params, thunkAPI) => {
+    try {
+      const response = await orderManaApi.orderManaConfirm(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
 const orderMana = createSlice({
   name: 'order-mana',
   initialState: {

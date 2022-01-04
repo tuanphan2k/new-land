@@ -49,6 +49,18 @@ export const getOrderDetail = createAsyncThunk(
   }
 )
 
+export const addBillPayment = createAsyncThunk(
+  'order/addBillPayment',
+  async (params, thunkAPI) => {
+    try {
+      const response = await orderApi.addBillPayment(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
 const order = createSlice({
   name: 'order',
   initialState: {
