@@ -124,7 +124,7 @@ function Profile() {
     const values = orderForm.getFieldValue()
     setIsModalVisible(false)
     let formData = new FormData()
-    if (orderSelected?.status === 'Đang chờ thanh toán') {
+    if (orderSelected?.status === 'Đã đặt cọc, chờ thanh toán') {
       formData.append('code_bill_payment', values.code_bill_payment)
       res = await dispatch(
         addBillPaymentProduct({
@@ -145,6 +145,9 @@ function Profile() {
     }
 
     await notification.success({ message: res.payload.msg })
+    await dispatch(
+      getOrderList({ tokens: userInfo.token, user_id: userInfo.id })
+    )
   }
 
   async function handleShowOrder(id) {
@@ -173,7 +176,7 @@ function Profile() {
                 placeholder="Mã hoá đơn đặt cọc"
               />
             </Form.Item>
-            {orderSelected?.status === 'Đang chờ thanh toán' ? (
+            {orderSelected?.status === 'Đã đặt cọc, chờ thanh toán' ? (
               <>
                 <Form.Item
                   label="Mã hoá đơn thanh toán"

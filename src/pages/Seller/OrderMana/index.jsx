@@ -109,16 +109,16 @@ function OrderMana() {
     const values = orderForm.getFieldValue()
     setIsModalVisible(false)
 
-    if (orderSelected?.status === 'Đang chờ thanh toán') {
+    if (orderSelected?.status === 'Đã đặt cọc, chờ thanh toán') {
       const resConfirm = await dispatch(
-        orderManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
+        paymentManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
       )
 
       notification.success({ message: resConfirm.payload.msg })
     } else {
       if (orderSelected?.code_bill_oder) {
         const resConfirm = await dispatch(
-          paymentManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
+          orderManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
         )
 
         notification.success({ message: resConfirm.payload.msg })
@@ -140,6 +140,10 @@ function OrderMana() {
         notification.success({ message: resConfirm.payload.msg })
       }
     }
+
+    await dispatch(
+      getOrderManaList({ tokens: userInfo.token, user_id: userInfo.id })
+    )
   }
 
   const handleDeleteOrder = async id => {
@@ -181,7 +185,7 @@ function OrderMana() {
                 placeholder="Mã hoá đơn thanh toán"
               />
             </Form.Item>
-            {orderSelected?.status === 'Đang chờ thanh toán' ? (
+            {orderSelected?.status === 'Đã đặt cọc, chờ thanh toán' ? (
               ''
             ) : (
               <Row justify="space-around" align="middle">
@@ -194,7 +198,7 @@ function OrderMana() {
                 </Button>
               </Row>
             )}
-            {orderSelected?.status === 'Đang chờ thanh toán' ? (
+            {orderSelected?.status === 'Đã đặt cọc, chờ thanh toán' ? (
               <>
                 <Form.Item
                   label="Mã hoá đơn thanh toán"
