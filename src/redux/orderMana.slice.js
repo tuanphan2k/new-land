@@ -61,6 +61,18 @@ export const orderManaConfirm = createAsyncThunk(
   }
 )
 
+export const paymentManaConfirm = createAsyncThunk(
+  'order-mana/paymentManaConfirm',
+  async (params, thunkAPI) => {
+    try {
+      const response = await orderManaApi.paymentManaConfirm(params)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
 const orderMana = createSlice({
   name: 'order-mana',
   initialState: {

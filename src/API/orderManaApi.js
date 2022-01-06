@@ -48,6 +48,19 @@ const orderManaApi = {
         }
       }
     )
+  },
+
+  paymentManaConfirm: params => {
+    const url = `/oder-manager/confirm-payment/${params.id}`
+    return axiosClient.post(
+      url,
+      { data: '123' },
+      {
+        headers: {
+          Authorization: `Bearer ${params.tokens}`
+        }
+      }
+    )
   }
 }
 

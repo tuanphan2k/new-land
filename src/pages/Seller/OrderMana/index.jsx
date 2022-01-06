@@ -18,7 +18,8 @@ import {
   deleteOrderMana,
   addBillPaymentMana,
   getOrderDetailMana,
-  orderManaConfirm
+  orderManaConfirm,
+  paymentManaConfirm
 } from '../../../redux/orderMana.slice'
 
 function OrderMana() {
@@ -27,6 +28,11 @@ function OrderMana() {
 
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
   const [orderSelected, setOrderSelected] = useState()
+  const [orderForm] = Form.useForm()
+
+  useEffect(() => {
+    orderForm.resetFields()
+  }, [orderSelected?.id])
 
   useEffect(() => {
     dispatch(getOrderManaList({ tokens: userInfo.token, user_id: userInfo.id }))
@@ -99,30 +105,40 @@ function OrderMana() {
     setIsModalVisible(true)
   }
 
-  async function handleSubmitCode(values) {
+  async function handleSubmitCode() {
+    const values = orderForm.getFieldValue()
     setIsModalVisible(false)
-    if (orderSelected?.code_bill_oder) {
+
+    if (orderSelected?.status === 'Đang chờ thanh toán') {
       const resConfirm = await dispatch(
         orderManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
       )
 
       notification.success({ message: resConfirm.payload.msg })
     } else {
-      let formData = new FormData()
-      formData.append('code_bill_oder', values.code_bill_oder)
-      const res = await dispatch(
-        addBillPaymentMana({
-          tokens: userInfo.token,
-          id: orderSelected?.id,
-          body: formData
-        })
-      )
+      if (orderSelected?.code_bill_oder) {
+        const resConfirm = await dispatch(
+          paymentManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
+        )
 
-      const resConfirm = await dispatch(
-        orderManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
-      )
+        notification.success({ message: resConfirm.payload.msg })
+      } else {
+        let formData = new FormData()
+        formData.append('code_bill_oder', values.code_bill_oder)
+        const res = await dispatch(
+          addBillPaymentMana({
+            tokens: userInfo.token,
+            id: orderSelected?.id,
+            body: formData
+          })
+        )
 
-      notification.success({ message: resConfirm.payload.msg })
+        const resConfirm = await dispatch(
+          orderManaConfirm({ id: orderSelected?.id, tokens: userInfo.token })
+        )
+
+        notification.success({ message: resConfirm.payload.msg })
+      }
     }
   }
 
@@ -151,31 +167,58 @@ function OrderMana() {
         title="Gửi hoá đơn đặt cọc"
         visible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        width={400}
+        width={500}
       >
-        {orderSelected?.name_product ? (
-          <Form
-            initialValues={orderSelected}
-            onFinish={values => handleSubmitCode(values)}
-          >
+        {orderSelected?.code_bill_oder ? (
+          <Form form={orderForm} name="orderForm" initialValues={orderSelected}>
             <Form.Item
               name="code_bill_oder"
               label="Mã hoá đơn"
               rules={[{ required: true, message: 'Nhập mã hoá đơn!' }]}
             >
               <Input
-                disabled={orderSelected?.name_product ? true : false}
+                disabled={orderSelected?.code_bill_oder ? true : false}
                 placeholder="Mã hoá đơn thanh toán"
               />
             </Form.Item>
-            <Row justify="space-around" align="middle">
-              <Button type="primary" size="large" htmlType="submit">
-                Xác nhận
-              </Button>
-              <Button size="large" onClick={() => setIsModalVisible(false)}>
-                Huỷ
-              </Button>
-            </Row>
+            {orderSelected?.status === 'Đang chờ thanh toán' ? (
+              ''
+            ) : (
+              <Row justify="space-around" align="middle">
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => handleSubmitCode()}
+                >
+                  Xác nhận
+                </Button>
+              </Row>
+            )}
+            {orderSelected?.status === 'Đang chờ thanh toán' ? (
+              <>
+                <Form.Item
+                  label="Mã hoá đơn thanh toán"
+                  name="code_bill_payment"
+                  rules={[{ required: true, message: 'Nhập mã hoá đơn!' }]}
+                >
+                  <Input
+                    disabled={orderSelected?.code_bill_payment ? true : false}
+                    placeholder="Mã hoá đơn thanh toán"
+                  />
+                </Form.Item>
+                <Row justify="center" align="middle">
+                  <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => handleSubmitCode()}
+                  >
+                    Xác nhận
+                  </Button>
+                </Row>
+              </>
+            ) : (
+              ''
+            )}
           </Form>
         ) : (
           <Spin />

@@ -50,7 +50,6 @@ function ProductInfo({ detail, infoDetail }) {
 
   const favoriteList = useSelector(state => state.favorite)
   const commentList = useSelector(state => state.comment)
-  console.log(commentList)
   const hasProduct = favoriteList?.data?.findIndex(
     item => item.product_id === id
   )

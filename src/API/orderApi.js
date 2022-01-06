@@ -44,6 +44,15 @@ const orderApi = {
         Authorization: `Bearer ${params.tokens}`
       }
     })
+  },
+
+  addBillPaymentProduct: params => {
+    const url = `/oder/code-bill-payment/${params.id}`
+    return axiosClient.post(url, params.body, {
+      headers: {
+        Authorization: `Bearer ${params.tokens}`
+      }
+    })
   }
 }
 

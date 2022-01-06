@@ -26,7 +26,8 @@ import {
   getOrderList,
   deleteOrder,
   getOrderDetail,
-  addBillPayment
+  addBillPayment,
+  addBillPaymentProduct
 } from '../../../redux/order.slice'
 import './style.scss'
 
@@ -42,6 +43,12 @@ function Profile() {
   useEffect(() => {
     dispatch(getOrderList({ tokens: userInfo.token, user_id: userInfo.id }))
   }, [])
+
+  useEffect(() => {
+    orderForm.resetFields()
+  }, [orderSelected?.id])
+
+  const [orderForm] = Form.useForm()
 
   const onFinish = values => {}
 
@@ -112,17 +119,30 @@ function Profile() {
     )
   }
 
-  async function handleSubmitCode(values) {
+  async function handleSubmitCode() {
+    let res = {}
+    const values = orderForm.getFieldValue()
     setIsModalVisible(false)
     let formData = new FormData()
-    formData.append('code_bill_oder', values.code_bill_oder)
-    const res = await dispatch(
-      addBillPayment({
-        tokens: userInfo.token,
-        id: orderSelected?.id,
-        body: formData
-      })
-    )
+    if (orderSelected?.status === 'Đang chờ thanh toán') {
+      formData.append('code_bill_payment', values.code_bill_payment)
+      res = await dispatch(
+        addBillPaymentProduct({
+          tokens: userInfo.token,
+          id: orderSelected?.id,
+          body: formData
+        })
+      )
+    } else {
+      formData.append('code_bill_oder', values.code_bill_oder)
+      res = await dispatch(
+        addBillPayment({
+          tokens: userInfo.token,
+          id: orderSelected?.id,
+          body: formData
+        })
+      )
+    }
 
     await notification.success({ message: res.payload.msg })
   }
@@ -130,7 +150,7 @@ function Profile() {
   async function handleShowOrder(id) {
     const res = await dispatch(getOrderDetail({ tokens: userInfo.token, id }))
     await setOrderSelected(res.payload)
-    setIsModalVisible(true)
+    await setIsModalVisible(true)
   }
 
   return (
@@ -139,33 +159,58 @@ function Profile() {
         title="Gửi hoá đơn đặt cọc"
         visible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        width={400}
+        width={500}
       >
         {orderSelected?.name_product ? (
-          <Form
-            initialValues={orderSelected}
-            onFinish={values => handleSubmitCode(values)}
-          >
+          <Form form={orderForm} name="orderForm" initialValues={orderSelected}>
             <Form.Item
+              label="Mã hoá đơn đặt cọc"
               name="code_bill_oder"
-              label="Mã hoá đơn"
               rules={[{ required: true, message: 'Nhập mã hoá đơn!' }]}
             >
               <Input
-                disabled={orderSelected?.name_product ? true : false}
-                placeholder="Mã hoá đơn thanh toán"
+                disabled={orderSelected?.code_bill_oder ? true : false}
+                placeholder="Mã hoá đơn đặt cọc"
               />
             </Form.Item>
-            <Row justify="center" align="middle">
-              <Button
-                type="primary"
-                size="large"
-                htmlType="submit"
-                disabled={orderSelected?.name_product ? true : false}
-              >
-                Hoàn tất
-              </Button>
-            </Row>
+            {orderSelected?.status === 'Đang chờ thanh toán' ? (
+              <>
+                <Form.Item
+                  label="Mã hoá đơn thanh toán"
+                  name="code_bill_payment"
+                  rules={[{ required: true, message: 'Nhập mã hoá đơn!' }]}
+                >
+                  <Input
+                    disabled={orderSelected?.code_bill_payment ? true : false}
+                    placeholder="Mã hoá đơn thanh toán"
+                  />
+                </Form.Item>
+                <Row justify="center" align="middle">
+                  <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => handleSubmitCode()}
+                  >
+                    Gửi mã hoá đơn thanh toán
+                  </Button>
+                </Row>
+              </>
+            ) : (
+              ''
+            )}
+            {orderSelected?.code_bill_oder ? (
+              ''
+            ) : (
+              <Row justify="center" align="middle">
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => handleSubmitCode()}
+                >
+                  Gửi mã hoá đơn đặt cọc
+                </Button>
+              </Row>
+            )}
           </Form>
         ) : (
           <Spin />
