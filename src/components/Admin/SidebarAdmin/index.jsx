@@ -10,7 +10,8 @@ import {
   UsergroupAddOutlined,
   TeamOutlined,
   HighlightOutlined,
-  FundOutlined
+  FundOutlined,
+  BarChartOutlined
 } from '@ant-design/icons'
 import './style.scss'
 
@@ -30,9 +31,18 @@ function SidebarAdmin({ isSeller }) {
               <img src={logo} alt="" />
             </div>
           </Row>
-          <Menu theme="" mode="inline" defaultSelectedKeys={['1']}>
+          <Menu theme="" mode="inline" defaultSelectedKeys={['0']}>
             {isSeller ? (
               <>
+                <Menu.Item
+                  key="0"
+                  icon={<BarChartOutlined />}
+                  onClick={() => {
+                    history.push(PATH.REPORT)
+                  }}
+                >
+                  Thống kê
+                </Menu.Item>
                 <Menu.Item
                   key="1"
                   icon={<TeamOutlined />}

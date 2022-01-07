@@ -69,11 +69,17 @@ function ProductList() {
         <Col span={19}>
           <Row span={26} gutter={16} className="show-product__content--list">
             {productList?.data &&
-              productList?.data.map(item => (
-                <Col span={6} key={item.id}>
-                  <ProductItem product={{ ...item, token: userInfo.token }} />
-                </Col>
-              ))}
+              productList?.data.map(item => {
+                if (item?.quantity > 0) {
+                  return (
+                    <Col span={6} key={item.id}>
+                      <ProductItem
+                        product={{ ...item, token: userInfo?.token }}
+                      />
+                    </Col>
+                  )
+                }
+              })}
           </Row>
         </Col>
       </Row>

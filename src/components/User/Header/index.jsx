@@ -28,7 +28,9 @@ function Header() {
 
   useEffect(() => {
     dispatch(getCategoryList({}))
-    dispatch(getFavoriteList({ tokens: userInfo.token }))
+    if (userInfo?.token) {
+      dispatch(getFavoriteList({ tokens: userInfo.token }))
+    }
   }, [dispatch])
 
   function renderCategory() {
@@ -68,7 +70,7 @@ function Header() {
           Trở về trang Admin
         </Menu.Item>
       ) : userInfo?.account_type === 2 ? (
-        <Menu.Item key="4" onClick={() => history.push('/seller/employee')}>
+        <Menu.Item key="4" onClick={() => history.push('/seller/report')}>
           Quản lý
         </Menu.Item>
       ) : (

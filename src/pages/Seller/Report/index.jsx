@@ -2,19 +2,19 @@ import { Row, Col, Card, DatePicker, Input } from 'antd'
 import { useEffect } from 'react'
 import { Doughnut, Line } from 'react-chartjs-2'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDataAdmin, postTimeAdmin } from '../../../redux/report.slice'
-import { getUserList } from '../../../redux/user.slice'
+import { getDataSeller, postTimeSeller } from '../../../redux/report.slice'
+import { getProductList } from '../../../redux/product.slice'
 import './style.scss'
 
-function DashboardPage() {
+function ReportPage() {
   const dispatch = useDispatch()
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
   const dataList = useSelector(state => state.report)
-  const userList = useSelector(state => state.user)
+  const productList = useSelector(state => state.product)
 
   useEffect(() => {
-    dispatch(getDataAdmin({ tokens: userInfo?.token }))
-    dispatch(getUserList(userInfo.token))
+    dispatch(getDataSeller({ tokens: userInfo?.token }))
+    dispatch(getProductList({ tokens: userInfo.token, user_id: userInfo.id }))
   }, [])
 
   const { Search } = Input
@@ -67,13 +67,13 @@ function DashboardPage() {
 
     if (arr) {
       await dispatch(
-        postTimeAdmin({
+        postTimeSeller({
           body: { month: arr && arr[2], year: arr && arr[3] },
           tokens: userInfo.token
         })
       )
     } else {
-      dispatch(getDataAdmin({ tokens: userInfo?.token }))
+      dispatch(getDataSeller({ tokens: userInfo?.token }))
     }
   }
 
@@ -160,11 +160,11 @@ function DashboardPage() {
         </Col>
         <Col span={4}>
           <Card
-            title="Số người dùng"
+            title="Số tin đăng bán"
             bordered={true}
             className="dashboard-page__statistical--item"
           >
-            {userList?.data?.length}
+            {productList?.data?.length}
           </Card>
         </Col>
         <Col span={4}>
@@ -181,4 +181,4 @@ function DashboardPage() {
   )
 }
 
-export default DashboardPage
+export default ReportPage

@@ -12,12 +12,12 @@ function HomePage() {
   const [localSelected, setLocalSelected] = useState(1)
 
   useEffect(() => {
-    dispatch(showProductList('Hà Nội'))
+    dispatch(showProductList(27))
   }, [])
 
   function handleFilterLocal(id, name) {
     setLocalSelected(id)
-    dispatch(showProductList(name))
+    dispatch(showProductList())
   }
 
   const productList = [
@@ -186,11 +186,15 @@ function HomePage() {
             ))}
           </Row>
           <Row gutter={24}>
-            {productList.map(item => (
-              <Col span={6} key={item.id}>
-                <ProductItem product={item} />
-              </Col>
-            ))}
+            {productListData?.data.map((item, index) => {
+              if (index < 8) {
+                return (
+                  <Col span={6} key={item.id}>
+                    <ProductItem product={item} />
+                  </Col>
+                )
+              }
+            })}
           </Row>
         </div>
       </div>

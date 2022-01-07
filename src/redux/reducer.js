@@ -9,6 +9,7 @@ import favoriteReducer from './favorite.slice'
 import orderReducer from './order.slice'
 import orderManaReducer from './orderMana.slice'
 import commentReducer from './comment.slice'
+import reportManaReducer from './report.slice'
 
 const rootReducer = {
   auth: authReducer,
@@ -21,7 +22,8 @@ const rootReducer = {
   favorite: favoriteReducer,
   order: orderReducer,
   orderMana: orderManaReducer,
-  comment: commentReducer
+  comment: commentReducer,
+  report: reportManaReducer
 }
 
 export default rootReducer

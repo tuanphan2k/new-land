@@ -27,6 +27,7 @@ import NewsPage from './pages/Seller/News'
 import NewsListPage from './pages/Seller/News/NewsList'
 import OrderManaPage from './pages/Seller/OrderMana'
 import DetailNewsPage from './pages/User/NewsDetail'
+import ReportPage from './pages/Seller/Report'
 
 function BrowserRouter() {
   return (
@@ -73,6 +74,7 @@ function BrowserRouter() {
           component={DetailNewsPage}
         />
         <SellerLayout exact path={PATH.ORDERMANA} component={OrderManaPage} />
+        <SellerLayout exact path={PATH.REPORT} component={ReportPage} />
       </Switch>
     </Router>
   )
